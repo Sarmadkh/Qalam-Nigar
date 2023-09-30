@@ -1,4 +1,4 @@
-const proxy = ''; // https://corsproxy.io/?
+const proxy = 'https://corsproxy.io/?'; // 
 const website = 'https://dailyurducolumns.com/';
 const bottomItems = document.querySelectorAll('.bottom-item');
 const content = document.querySelector('.content');
