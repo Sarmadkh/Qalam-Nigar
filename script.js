@@ -89,7 +89,7 @@ authorListItems.forEach(authorListItem => {
         event.preventDefault(); // Prevent default link behavior
         // Get the selected author's name
         selectedAuthor = event.target.textContent; // Set selectedAuthor here
-        const authorURL = website + selectedAuthor.replace(/ /g, '-') + "/" + page;
+        const authorURL = proxy + website + selectedAuthor.replace(/ /g, '-') + "/" + page;
         clearScrapedData();
         scrapeData(authorURL);
         displayData();
