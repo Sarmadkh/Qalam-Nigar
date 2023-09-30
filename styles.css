@@ -1,0 +1,253 @@
+body,
+h1,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+@font-face {
+  font-family: "Amar";
+  src: url("Amar.woff2") format("woff2");
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #007acc;
+  color: #fff;
+  padding: 10px;
+  font-size: 20px;
+  flex: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.top-bar .top-left,
+.top-bar .top-right {
+  padding: 10px;
+  cursor: pointer;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 500px;
+	display: flex;
+	align-items: center;
+}
+
+.top-bar .top-left:hover,
+.top-bar .top-right:hover {
+  background-color: #00568c;
+  transition: color 0.3s;
+}
+
+.top-bar i {
+    line-height: 25px;
+}
+
+.top-left i.fas.fa-arrow-left,
+.top-right i.fas.fa-ellipsis-v {
+  display: none;
+}
+
+.bottom-menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #007acc;
+  color: #fff;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.bottom-item {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  flex: 1;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  height: 100%;
+}
+
+.bottom-item i {
+  font-size: 20px;
+}
+
+.bottom-item span {
+  font-size: 16px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.bottom-item.active {
+  background-color: #00568c;
+  color: #fff;
+}
+
+.bottom-item.active span {
+  color: #fff;
+}
+
+.search-box {
+  text-align: center;
+  position: fixed;
+  top: 65px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  width: 70%;
+
+}
+
+.search-box input {
+  background-color: #f4f4f4;
+  border: 2px solid #007BFF;
+  border-radius: 20px;
+  padding: 10px;
+  width: 100%;
+  font-size: 16px;
+  outline: none;
+  transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.search-box button {
+  background: none;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #007acc;
+}
+
+.author-list {
+  position: fixed;
+  width: 100%;
+  top: 125px;
+  bottom: 50px;
+  overflow-y: scroll;
+  left: 0;
+  right: 0;
+}
+
+.content {
+  position: fixed;
+  top: 70px;
+  padding: 20px;
+  bottom: 50px;
+  left: 0px;
+  right: 0px;
+  overflow-y: scroll;
+}
+
+.author-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 10px;
+  list-style: none;
+}
+
+.author-grid li {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+  font-size: 16px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.5s;
+}
+
+.author-grid li:hover {
+  background-color: #007acc;
+  color: #fff;
+  cursor: pointer;
+}
+
+.article-list {
+  max-height: 5000px;
+  padding: 10px;
+  transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+	overflow: auto;
+}
+
+.article-list.hidden {
+  background-color: #f4f4f4;
+  padding: 0;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+}
+
+.article-text {
+  flex: 1;
+  background-color: #fff;
+  padding: 0px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  font-family: "Amar", sans-serif;
+  font-size: 20pt;
+  line-height: 2;
+  text-align: justify;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+  padding: 0;
+  opacity: 0;
+}
+
+.article-text.active {
+  max-height: 50000px;
+  padding: 20px;
+  opacity: 1;
+  transition: 0.3s ease-in-out, padding 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
+}
+
+.list-item {
+  display: flex;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  cursor: pointer;
+  font-family: arial, sans-serif;
+}
+
+.list-item:hover {
+  background-color: #f4f4f4;
+}
+
+.list-item-left {
+  flex: 1;
+  font-weight: bold;
+  background-color: #007bff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  flex-direction: column;
+}
+
+.list-item-right {
+  flex: 3;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+}
