@@ -51,6 +51,10 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById(screenId).style.display = 'block';
             // Update the top menu text based on the active screen
             topMiddle.textContent = screenTextMap[screenId] || "Articles";
+            // Check if the "Author" screen is clicked and run the backButton function
+            if (screenId === 'authors') {
+                backButton();
+            }
         });
     });
 });
@@ -228,6 +232,10 @@ async function displayArticleText(url) {
 
 // Ensure Back Button is working and switching _____________________________________________________________
 document.querySelector('.top-left').addEventListener('click', () => {
+	backButton();
+});
+
+function backButton() {
     if (articleText.classList.contains('active')) {
         // If article text is active, hide it and show the article list
         articleText.classList.remove('active');
@@ -237,7 +245,7 @@ document.querySelector('.top-left').addEventListener('click', () => {
         barsIcon.style.display = 'block';
         dateIcon.style.display = 'block';
     }
-});
+}
 
 // Search Functionality for Author List _____________________________________________________________
 document.addEventListener('DOMContentLoaded', function() {
