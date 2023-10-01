@@ -14,7 +14,7 @@ const barsIcon = document.querySelector('.top-left i.fas.fa-bars');
 const menuIcon = document.querySelector('.top-right i.fas.fa-ellipsis-v');
 const dateIcon = document.querySelector('.top-right i.far.fa-calendar-alt');
 let page = 1;
-let selectedAuthor;
+let selectedAuthor = "";
 
 //Chnage styling for Bottom Menu on click _____________________________________________________________
 document.addEventListener('DOMContentLoaded', function() {
@@ -84,27 +84,50 @@ async function scrapeData(url = proxy + website + 'LstColumns.aspx') {
 }
 
 // Selecting the Author _____________________________________________________________
+function handleAuthorSelection(event) {
+    event.preventDefault();
+    selectedAuthor = event.target.textContent;
+    clearScrapedData();
+    if (selectedAuthor) {
+        page = 1;
+        getNewData(selectedAuthor, page);
+    } else {
+        console.error("Selected author is undefined.");
+    }
+}
+
+// Attaching Click with Author List
 authorListItems.forEach(authorListItem => {
-    authorListItem.addEventListener('click', (event) => {
-        event.preventDefault(); // Prevent default link behavior
-        // Get the selected author's name
-        selectedAuthor = event.target.textContent; // Set selectedAuthor here
-        const authorURL = proxy + website + selectedAuthor.replace(/ /g, '-') + "/" + page;
-        clearScrapedData();
-        scrapeData(authorURL);
+    authorListItem.addEventListener('click', handleAuthorSelection);
+	 
+});
+
+function getNewData(authorName, page) {
+    if (authorName) {
+        const authorURL = proxy + website + authorName.replace(/ /g, '-') + "/" + page;
+       scrapedData.length = 0;
+		 scrapeData(authorURL);
         displayData();
         // Switching to the "Articles" screen
         const articlesMenuItem = document.querySelector('[data-screen="articles"]');
         if (articlesMenuItem) {
             articlesMenuItem.click();
         }
-        if (authorSearchInput) { // Clear the search box text
+        if (authorSearchInput) {
             authorSearchInput.value = '';
         }
-        authorListItems.forEach(item => { // Reset the display property of the author list items
+        authorListItems.forEach(item => {
             item.style.display = 'block';
         });
-    });
+    }
+}
+// Load new data when page reached bottom
+content.addEventListener('scroll', function () {
+    if (content.scrollTop + content.clientHeight >= content.scrollHeight) {
+       page++ 
+		 getNewData(selectedAuthor,page);
+		 
+    }
 });
 
 // Function to format the date as three lines _____________________________________________________________
@@ -129,12 +152,14 @@ function displayData() {
         const formattedDate = formatDate(item.date);
         const listItem = document.createElement('div');
         listItem.classList.add('list-item');
+        // Set the URL as a data attribute
+        listItem.setAttribute('data-url', item.url);
         listItem.innerHTML = `
                     <div class="list-item-left">${formattedDate}</div>
                     <div class="list-item-right">
                         <p><strong>${item.title}</strong></p>
-								<p>&nbsp;</p>                        
-								<p>${item.author}</p>
+                        <p style="color: transparent;">${item.url}</p>
+                        <p>${item.author}</p>
                     </div>
                 `;
         articleList.appendChild(listItem);
@@ -148,23 +173,26 @@ function clearScrapedData() {
 }
 
 // Makes sure each item is clickable with correct url _____________________________________________________________
+function handleArticleClick(selectedItem) {
+    const topAnchor = document.getElementById('top');
+    topAnchor.scrollIntoView({ behavior: 'smooth' });
+
+    backIcon.style.display = 'block';
+    menuIcon.style.display = 'block';
+    barsIcon.style.display = 'none';
+    dateIcon.style.display = 'none';
+
+    displayArticleText(selectedItem.url);
+	console.log('Selected Article URL:', selectedItem.url);
+}
+
+// Attach a single event listener to the articleList
 articleList.addEventListener('click', (event) => {
     const listItem = event.target.closest('.list-item');
     if (listItem) {
-        const itemIndex = Array.from(articleList.children).indexOf(listItem);
-        const selectedItem = scrapedData[itemIndex];
-        if (selectedItem) {
-            // Scroll to the top of the page when a list item is clicked
-            const topAnchor = document.getElementById('top');
-            topAnchor.scrollIntoView({
-                behavior: 'smooth'
-            });
-            // Toggle the visibility of the icons
-            backIcon.style.display = 'block';
-            menuIcon.style.display = 'block';
-            barsIcon.style.display = 'none';
-            dateIcon.style.display = 'none';
-            displayArticleText(selectedItem.url);
+        const articleURL = listItem.getAttribute('data-url');
+        if (articleURL) {
+            handleArticleClick({ url: articleURL }); // Pass the URL as an argument
         }
     }
 });
