@@ -158,7 +158,8 @@ function displayData() {
                     <div class="list-item-left">${formattedDate}</div>
                     <div class="list-item-right">
                         <p><strong>${item.title}</strong></p>
-                        <p style="color: transparent;">${item.url}</p>
+								<p>&nbsp</p>
+                        <p style="color: transparent; font-size: 1pt;">${item.url}</p>
                         <p>${item.author}</p>
                     </div>
                 `;
