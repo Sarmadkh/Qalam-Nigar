@@ -175,8 +175,7 @@ function clearScrapedData() {
 
 // Makes sure each item is clickable with correct url _____________________________________________________________
 function handleArticleClick(selectedItem) {
-    const topAnchor = document.getElementById('top');
-    topAnchor.scrollIntoView({ behavior: 'smooth' });
+
 
     backIcon.style.display = 'block';
     menuIcon.style.display = 'block';
@@ -223,6 +222,8 @@ async function displayArticleText(url) {
     } catch (error) {
         console.error('Error fetching article text:', error);
     }
+			const topAnchor = document.getElementById('top');
+    		topAnchor.scrollIntoView({ behavior: 'smooth' });
 }
 
 // Ensure Back Button is working and switching _____________________________________________________________
