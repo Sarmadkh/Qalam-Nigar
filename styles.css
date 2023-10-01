@@ -110,7 +110,7 @@ p {
 
 .search-box input {
   background-color: #28282B;
-  border: 2px solid #007BFF;
+  border: 2px solid #007acc;
   border-radius: 20px;
   padding: 10px;
   width: 100%;
@@ -119,6 +119,7 @@ p {
   transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
   margin-top: 10px;
   margin-bottom: 20px;
+	color:white;
 }
 
 .search-box button {
@@ -153,7 +154,7 @@ p {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
-  padding: 50px;
+  padding: 10px;
   list-style: none;
 }
 
