@@ -3,6 +3,8 @@ h1,
 p {
   margin: 0;
   padding: 0;
+	background: #28282B;
+	color: white;
 }
 
 @font-face {
@@ -107,7 +109,7 @@ p {
 }
 
 .search-box input {
-  background-color: #f4f4f4;
+  background-color: #28282B;
   border: 2px solid #007BFF;
   border-radius: 20px;
   padding: 10px;
@@ -157,7 +159,7 @@ p {
 }
 
 .author-grid li {
-  background-color: #fff;
+  background-color: #28282B;
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 10px;
@@ -181,7 +183,7 @@ p {
   max-height: 5000px;
   padding: 10px;
   transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
-	overflow: auto;
+  overflow: auto;
 }
 
 .article-list.hidden {
@@ -196,7 +198,6 @@ p {
 
 .article-text {
   flex: 1;
-  background-color: #fff;
   padding: 0px;
   border: 1px solid #ccc;
   border-radius: 10px;
@@ -231,7 +232,7 @@ p {
 }
 
 .list-item:hover {
-  background-color: #f4f4f4;
+  background-color: #2F2F2F;
 }
 
 .list-item-left {
@@ -250,4 +251,8 @@ p {
   padding: 15px;
   display: flex;
   flex-direction: column;
+}
+
+.list-item-right p {
+  background-color: transparent;
 }
