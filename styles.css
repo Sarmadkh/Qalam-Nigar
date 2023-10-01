@@ -143,6 +143,7 @@ p {
 .content {
   position: fixed;
   top: 70px;
+  padding: 20px;
   bottom: 50px;
   left: 0px;
   right: 0px;
@@ -237,7 +238,7 @@ p {
 .list-item-left {
   flex: 1;
   font-weight: bold;
-  background-color: #007bff;
+  background-color: #007acc;
   display: flex;
   justify-content: center;
   align-items: center;
