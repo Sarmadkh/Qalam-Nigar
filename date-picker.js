@@ -133,6 +133,17 @@ function AddCalendarMonths(Year) {
 
 function SetDate(Obj) {
     if (Obj.innerHTML.toString() !== '') {
+        const selectedDate = new Date(window.Year, window.Month, parseInt(Obj.innerHTML, 10));
+        const today = new Date();
+        
+        // Check if the selected date is greater than today
+        if (selectedDate > today) {
+            // Set the selected date to today's date
+            window.Year = today.getFullYear();
+            window.Month = today.getMonth();
+            Obj.innerHTML = today.getDate();
+        }
+
         const year = window.Year;
         const month = window.Month + 1;
         const day = Obj.innerHTML.toString();
@@ -140,9 +151,11 @@ function SetDate(Obj) {
         clearScrapedData();
         const newURL = proxy + website + 'columns/'+ formattedDate;
         scrapeData(newURL);
-		 ClearDatePicker();
+        selectedAuthor = "";
+        ClearDatePicker();
     }
 }
+
 
 function ClearDatePicker() {
     if (window.DatePickerHolder) {
