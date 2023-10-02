@@ -1,4 +1,4 @@
-const proxy = 'https://corsproxy.io/?'; // https://corsproxy.io/?
+const proxy = 'https://corsproxy.io/?'; // 
 const website = 'https://dailyurducolumns.com/';
 const bottomItems = document.querySelectorAll('.bottom-item');
 const content = document.querySelector('.content');
@@ -338,6 +338,8 @@ alignmentButtons.forEach(button => {
         const alignment = button.id;
         document.querySelector('.article-text').style.textAlign = alignment;
         localStorage.setItem('alignment', alignment);
+        alignmentButtons.forEach(btn => btn.classList.remove('text-icon-button-active'));
+        button.classList.add('text-icon-button-active');
     });
 });
 
