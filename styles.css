@@ -3,9 +3,8 @@ h1,
 p {
   margin: 0;
   padding: 0;
-	background: #28282B;
-	color: white;
-  overflow-y: auto;
+  background: #28282B;
+  color: white;
 }
 
 @font-face {
@@ -38,8 +37,8 @@ p {
   padding-left: 20px;
   padding-right: 20px;
   border-radius: 500px;
-	display: flex;
-	align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .top-bar .top-left:hover,
@@ -49,7 +48,7 @@ p {
 }
 
 .top-bar i {
-    line-height: 25px;
+  line-height: 25px;
 }
 
 .top-left i.fas.fa-arrow-left,
@@ -120,7 +119,7 @@ p {
   transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
   margin-top: 10px;
   margin-bottom: 20px;
-	color:white;
+  color: white;
 }
 
 .search-box button {
@@ -131,9 +130,11 @@ p {
   font-size: 20px;
   color: #007acc;
 }
+
 .screen {
   overflow-y: scroll;
 }
+
 .author-list {
   position: fixed;
   width: 100%;
@@ -258,4 +259,52 @@ p {
 
 .list-item-right p {
   background-color: transparent;
+}
+
+.text-options-box {
+  background-color: #2F2F2F;
+  border: 1px solid #ccc;
+  border-radius: 10px 10px 0 0;
+  padding: 20px;
+  z-index: 1;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  bottom: -250px;
+  left: 0;
+  width: -webkit-fill-available;
+  transition: bottom 0.3s ease-in-out;
+}
+
+.text-options {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.text-slider {
+  width: 85%;
+  touch-action: none;
+}
+
+.text-icons {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.text-icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  flex-grow: 1;
+  padding: 10px;
+  text-align: center;
+  color: white;
+}
+
+.text-icon-button-active {
+  color: #007bff;
 }
