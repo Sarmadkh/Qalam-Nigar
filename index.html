@@ -24,8 +24,28 @@
     </div>
 <div class="content">
 	<a id="top"></a>
+  <div class="text-options-box">
+    <div class="text-options">
+        <i class="fas fa-text-height text-icon-button"></i>
+        <input type="range" class="text-slider" id="textSize" min="10" max="40" step="5" value="20">
+    </div>
+
+    <div class="text-options">
+        <i class="fas fa-ruler-vertical text-icon-button"></i>
+        <input type="range" class="text-slider" id="lineHeight" min="1" max="4" step="1" value="2">
+    </div>
+
+    <div class="text-options">
+        <div class="text-icons">
+            <button class="text-icon-button" id="left"><i class="fas fa-align-left"></i></button>
+            <button class="text-icon-button" id="center"><i class="fas fa-align-center"></i></button>
+            <button class="text-icon-button text-icon-button-active" id="justify"><i class="fas fa-align-justify"></i></button>
+            <button class="text-icon-button" id="right"><i class="fas fa-align-right"></i></button>
+        </div>
+    </div>
+</div>
     <div class="screen" id="articles">
-        <div class="article-list"></div>
+      <div class="article-list"></div>
 		  <div class="article-text"></div>
     </div>
 </div>
