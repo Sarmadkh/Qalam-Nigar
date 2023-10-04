@@ -11,28 +11,45 @@
 	  <link rel="icon" href="icon.png" type="image/png">
   </head>
   <body>
-    <div class="top-bar">
+    <div class="top-bar" id="top-bar-main" style="display: flex;">
       <div class="top-left">
-        <i class="fas fa-bars"></i>
-		  <i class="fas fa-arrow-left"></i>
+        
+        <i class="far fa-calendar-alt" class="date-picker"></i>
       </div>
       <div class="top-middle">Articles</div>
       <div class="top-right">
-        <i class="far fa-calendar-alt" class="date-picker"></i>
-		  <i class="fas fa-ellipsis-v"></i>
+          <i class="fas fa-search"></i>
       </div>
-    </div>
+  </div>
+
+  <div class="top-bar" id="top-bar-article" style="top: -100%;">
+      <div class="top-left">
+        <i class="fas fa-arrow-left"></i>
+      </div>
+      <div class="top-middle">Title</div>
+      <div class="top-right">
+        <i class="fas fa-expand"></i>
+      </div>
+  </div>
 <div class="content">
 	<a id="top"></a>
   <div class="text-options-box">
     <div class="text-options">
+      <span>Font Size</span>
         <i class="fas fa-text-height text-icon-button"></i>
         <input type="range" class="text-slider" id="textSize" min="10" max="40" step="5" value="20">
     </div>
 
     <div class="text-options">
+      <span>Line Height</span>
         <i class="fas fa-ruler-vertical text-icon-button"></i>
         <input type="range" class="text-slider" id="lineHeight" min="1" max="4" step="1" value="2">
+    </div>
+
+    <div class="text-options">
+      <span>Auto Scroll</span>
+      <i class="fas fa-angle-double-down text-icon-button"></i>
+      <input type="range" class="text-slider" id="autoScrollSpeed" min="0" max="4" step="1" value="0">
     </div>
 
     <div class="text-options">
@@ -47,6 +64,7 @@
     <div class="screen" id="articles">
       <div class="article-list"></div>
 		  <div class="article-text"></div>
+      <a id="bottom"></a>
     </div>
 </div>
       <div class="screen" id="authors">
@@ -59,23 +77,39 @@
         </ul>
     </div>
       <div class="screen" id="saved">
-        <!-- Saved screen content goes here --> Saved
+        Saved
       </div>
     </div>
-    <div class="bottom-menu">
-      <div class="bottom-item" data-screen="articles">
+    <div class="bottom-menu" id="bottom-bar-main">
+      <div class="bottom-item-main" data-screen="articles">
         <i class="fas fa-newspaper"></i>
         <span>Articles</span>
       </div>
-      <div class="bottom-item" data-screen="authors">
+      <div class="bottom-item-main" data-screen="authors">
         <i class="fas fa-users"></i>
         <span>Authors</span>
       </div>
-      <div class="bottom-item" data-screen="saved">
+      <div class="bottom-item-main" data-screen="saved">
         <i class="fas fa-bookmark"></i>
         <span>Saved</span>
       </div>
     </div>
+
+    <div class="bottom-menu" id="bottom-bar-article" style="bottom: -100%;">
+      <div class="bottom-item-article">
+        <i class="fas fa-share-alt"></i>
+        <span>Share</span>
+      </div>
+      <div class="bottom-item-article">
+        <i class="far fa-save"></i>
+        <span>Save</span>
+      </div>
+      <div class="bottom-item-article">
+        <i class="fas fa-sliders-h"></i>
+        <span>Settings</span>
+      </div>
+    </div>
+
     <script src="script.js"></script>
 	 <script src="date-picker.js"></script>
   </body>
