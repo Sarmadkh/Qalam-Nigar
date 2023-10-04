@@ -1,18 +1,16 @@
-const proxy = 'https://corsproxy.io/?'; // 
+const proxy = 'https://corsproxy.io/?'; // https://corsproxy.io/?
 const website = 'https://dailyurducolumns.com/';
-const bottomItems = document.querySelectorAll('.bottom-item');
+const bottomItems = document.querySelectorAll('.bottom-item-main');
 const content = document.querySelector('.content');
 const articleList = document.querySelector('.article-list');
 const authorListItems = document.querySelectorAll('.author-grid li');
 const articleText = document.querySelector('.article-text');
 const authorSearchInput = document.getElementById('authorSearchInput');
-const topLeft = document.querySelector('.top-left');
-const topRight = document.querySelector('.top-right');
-const topMiddle = document.querySelector('.top-middle');
-const backIcon = document.querySelector('.top-left i.fas.fa-arrow-left');
-const barsIcon = document.querySelector('.top-left i.fas.fa-bars');
-const menuIcon = document.querySelector('.top-right i.fas.fa-ellipsis-v');
-const dateIcon = document.querySelector('.top-right i.far.fa-calendar-alt');
+const topBarMain = document.getElementById('top-bar-main');
+const bottomBarMain = document.getElementById('bottom-bar-main');
+const topBarArticle = document.getElementById('top-bar-article');
+const bottomBarArticle = document.getElementById('bottom-bar-article');
+const dateIcon = document.querySelector('i.far.fa-calendar-alt').closest('.top-left');
 const settingsBox = document.querySelector('.text-options-box');
 let page = 1;
 let selectedAuthor = "";
@@ -51,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const screenId = bottomItems[index].dataset.screen;
             document.getElementById(screenId).style.display = 'block';
             // Update the top menu text based on the active screen
-            topMiddle.textContent = screenTextMap[screenId] || "Articles";
+            document.querySelector('.top-middle').textContent = screenTextMap[screenId] || "Articles";
             // Check if the "Author" screen is clicked and run the backButton function
             if (screenId === 'authors') {
                 backButton();
@@ -180,10 +178,6 @@ function clearScrapedData() {
 
 // Makes sure each item is clickable with correct url _____________________________________________________________
 function handleArticleClick(selectedItem) {
-    backIcon.style.display = 'block';
-    menuIcon.style.display = 'block';
-    barsIcon.style.display = 'none';
-    dateIcon.style.display = 'none';
     displayArticleText(selectedItem.url);
 }
 
@@ -215,33 +209,32 @@ async function displayArticleText(url) {
             articleText.appendChild(articleTextElement);
             articleText.classList.add('active');
             articleList.classList.add('hidden');
+            topBarMain.style.top = `-${topBarMain.offsetHeight}px`;
+            topBarArticle.style.top = `0`;
+            bottomBarMain.style.bottom = `-${bottomBarMain.offsetHeight}px`;
+            bottomBarArticle.style.bottom = `0`;
         } else {
             articleText.textContent = 'Article text not found.';
-            articleText.classList.remove('active');
-            articleList.classList.remove('hidden');
+            backButton();
         }
     } catch (error) {
         console.error('Error fetching article text:', error);
     }
-    const topAnchor = document.getElementById('top');
-    topAnchor.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('top').scrollIntoView({ behavior: 'smooth' });
 }
 
 // Ensure Back Button is working and switching _____________________________________________________________
-document.querySelector('.top-left').addEventListener('click', () => {
+document.querySelector('i.fas.fa-arrow-left').closest('.top-left').addEventListener('click', () => {
     backButton();
 });
 
 function backButton() {
-    if (articleText.classList.contains('active')) {
-        // If article text is active, hide it and show the article list
-        articleText.classList.remove('active');
-        articleList.classList.remove('hidden');
-        backIcon.style.display = 'none';
-        menuIcon.style.display = 'none';
-        barsIcon.style.display = 'block';
-        dateIcon.style.display = 'block';
-    }
+    articleText.classList.remove('active');
+    articleList.classList.remove('hidden');
+    topBarMain.style.top = '0'
+    topBarArticle.style.top = `-${topBarArticle.offsetHeight}px`;
+    bottomBarMain.style.bottom = '0';
+    bottomBarArticle.style.bottom = `-${bottomBarArticle.offsetHeight}px`;
 }
 
 // Search Functionality for Author List _____________________________________________________________
@@ -269,9 +262,9 @@ dateIcon.addEventListener('click', function (event) {
     AddCalendarDays(new Date().getFullYear(), new Date().getMonth(), dateIcon);
 });
 
-// Show/Hide the Text Options in Article Text Screen _____________________________________________________________
+//Show/Hide the Text Options in Article Text Screen _____________________________________________________________
 let isSettingsBoxVisible = false;
-menuIcon.addEventListener('click', (event) => {
+document.querySelector('i.fas.fa-sliders-h').closest('.bottom-item-article').addEventListener('click', (event) => {
     event.stopPropagation();
     if (isSettingsBoxVisible) {
         hideSettingsBox();
@@ -301,9 +294,9 @@ const alignmentButtons = document.querySelectorAll('.text-icon-button');
 // Load saved settings when the page loads
 window.addEventListener('load', () => {
     // Load and apply the saved settings, or use default values if not saved
-    const savedTextSize = localStorage.getItem('textSize') || '20'; // Default: 16px
-    const savedLineHeight = localStorage.getItem('lineHeight') || '2'; // Default: 1.5
-    const savedAlignment = localStorage.getItem('alignment') || 'justify'; // Default: 'alignJustify'
+    const savedTextSize = localStorage.getItem('textSize') || '20';
+    const savedLineHeight = localStorage.getItem('lineHeight') || '2';
+    const savedAlignment = localStorage.getItem('alignment') || 'justify';
 
     // Apply the loaded settings
     textSizeSlider.value = savedTextSize;
@@ -342,6 +335,7 @@ alignmentButtons.forEach(button => {
         button.classList.add('text-icon-button-active');
     });
 });
+
 
 // Call the scrapeData function when the page loads
 window.addEventListener('load', scrapeData());
