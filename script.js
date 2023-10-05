@@ -208,6 +208,8 @@ async function displayArticleText(url) {
         if (articleTextElement) {
             articleText.appendChild(articleTextElement);
             articleText.classList.add('active');
+            // Set the max-height of .article-text.active to the contentHeight
+            document.querySelector('.article-text.active').style.maxHeight = (document.querySelector('.content').offsetHeight - 50)  + 'px';
             articleList.classList.add('hidden');
             topBarMain.style.top = `-${topBarMain.offsetHeight}px`;
             topBarArticle.style.top = `0`;
@@ -220,7 +222,7 @@ async function displayArticleText(url) {
     } catch (error) {
         console.error('Error fetching article text:', error);
     }
-    document.getElementById('top').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('topMost').scrollIntoView({ behavior: 'smooth' });
 }
 
 // Ensure Back Button is working and switching _____________________________________________________________
@@ -229,12 +231,14 @@ document.querySelector('i.fas.fa-arrow-left').closest('.top-left').addEventListe
 });
 
 function backButton() {
+    document.querySelector('.article-text.active').style.maxHeight = 0  + 'px';
     articleText.classList.remove('active');
     articleList.classList.remove('hidden');
     topBarMain.style.top = '0'
     topBarArticle.style.top = `-${topBarArticle.offsetHeight}px`;
     bottomBarMain.style.bottom = '0';
     bottomBarArticle.style.bottom = `-${bottomBarArticle.offsetHeight}px`;
+
 }
 
 // Search Functionality for Author List _____________________________________________________________
@@ -335,6 +339,41 @@ alignmentButtons.forEach(button => {
         button.classList.add('text-icon-button-active');
     });
 });
+
+
+
+const scrollSpeed = document.getElementById('scrollSpeed');
+
+let scrollInterval = null;
+
+scrollSpeed.addEventListener('input', () => {
+    const speed = parseInt(scrollSpeed.value, 10);
+    startScroll(speed);
+});
+
+function startScroll(speed) {
+    if (speed > 0) {
+        stopScroll(); // Stop any ongoing scroll
+        // Adjust the scrollStep value to change the scrolling speed
+        const scrollStep = speed;
+        const intervalDelay = 50; // Increase this value for slower scrolling
+        scrollInterval = setInterval(() => {
+            articleText.scrollTop += scrollStep;
+            if (articleText.scrollTop >= articleText.scrollHeight - articleText.clientHeight) {
+                stopScroll();
+                // Set the slider back to 0 when scrolling reaches the end
+                scrollSpeed.value = 0;
+            }
+        }, intervalDelay);
+    } else {
+        stopScroll(); // Stop scroll if speed is 0
+    }
+}
+
+
+function stopScroll() {
+    clearInterval(scrollInterval);
+}
 
 
 // Call the scrapeData function when the page loads
