@@ -213,8 +213,8 @@ p {
 }
 
 .article-text.active {
-  max-height: fit-content;
   padding: 20px;
+  overflow-y: scroll;
   opacity: 1;
   transition: 0.3s ease-in-out, padding 0.3s ease-in-out,
     opacity 0.3s ease-in-out;
