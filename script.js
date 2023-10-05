@@ -1,4 +1,4 @@
-const proxy = 'https://corsproxy.io/?'; // https://corsproxy.io/?
+const proxy = 'https://corsproxy.io/?'; // 
 const website = 'https://dailyurducolumns.com/';
 const bottomItems = document.querySelectorAll('.bottom-item-main');
 const content = document.querySelector('.content');
@@ -222,7 +222,6 @@ async function displayArticleText(url) {
     } catch (error) {
         console.error('Error fetching article text:', error);
     }
-    document.getElementById('topMost').scrollIntoView({ behavior: 'smooth' });
 }
 
 // Ensure Back Button is working and switching _____________________________________________________________
@@ -232,6 +231,7 @@ document.querySelector('i.fas.fa-arrow-left').closest('.top-left').addEventListe
 
 function backButton() {
     document.querySelector('.article-text.active').style.maxHeight = 0  + 'px';
+    articleText.innerHTML = '';
     articleText.classList.remove('active');
     articleList.classList.remove('hidden');
     topBarMain.style.top = '0'
