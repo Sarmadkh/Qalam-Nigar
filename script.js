@@ -1,11 +1,12 @@
-const proxy = 'https://corsproxy.io/?'; // 
+const proxy = 'https://corsproxy.io/?'; // https://corsproxy.io/?
 const website = 'https://dailyurducolumns.com/';
 const bottomItems = document.querySelectorAll('.bottom-item-main');
 const content = document.querySelector('.content');
 const articleList = document.querySelector('.article-list');
 const authorListItems = document.querySelectorAll('.author-grid li');
 const articleText = document.querySelector('.article-text');
-const authorSearchInput = document.getElementById('authorSearchInput');
+const authorSearch = document.getElementById('authorSearch');
+const articleSearch = document.getElementById('articleSearch');
 const topBarMain = document.getElementById('top-bar-main');
 const bottomBarMain = document.getElementById('bottom-bar-main');
 const topBarArticle = document.getElementById('top-bar-article');
@@ -51,14 +52,11 @@ document.addEventListener('DOMContentLoaded', function () {
             // Update the top menu text based on the active screen
             document.querySelector('.top-middle').textContent = screenTextMap[screenId] || "Articles";
             // Check if the "Author" screen is clicked and run the backButton function
-            if (screenId === 'authors') {
-                backButton();
-            }
         });
     });
 });
 
-// Function to Scrape Data and store it in an array _____________________________________________________________
+// Function to Scrape Data and store it in an array ____________________________________________________________________________
 const scrapedData = [];
 scrapedData.length = 0;
 async function scrapeData(url = proxy + website + 'LstColumns.aspx') {
@@ -86,7 +84,7 @@ async function scrapeData(url = proxy + website + 'LstColumns.aspx') {
     }
 }
 
-// Selecting the Author _____________________________________________________________
+// Selecting the Author ___________________________________________________________________________________________
 function handleAuthorSelection(event) {
     event.preventDefault();
     selectedAuthor = event.target.textContent;
@@ -116,8 +114,8 @@ function getNewData(authorName, page) {
         if (articlesMenuItem) {
             articlesMenuItem.click();
         }
-        if (authorSearchInput) {
-            authorSearchInput.value = '';
+        if (authorSearch) {
+            authorSearch.value = '';
         }
         authorListItems.forEach(item => {
             item.style.display = 'block';
@@ -133,7 +131,7 @@ content.addEventListener('scroll', function () {
     }
 });
 
-// Function to format the date as three lines _____________________________________________________________
+// Function to format the date as three lines ____________________________________________________________________________
 function formatDate(inputDate) {
     const dateObj = new Date(inputDate);
     const day = dateObj.getDate();
@@ -149,7 +147,7 @@ function formatDate(inputDate) {
     `;
 }
 
-// Function to display the Scraped Data _____________________________________________________________
+// Function to display the Scraped Data ____________________________________________________________________________
 function displayData() {
     scrapedData.forEach(item => {
         const formattedDate = formatDate(item.date);
@@ -170,7 +168,7 @@ function displayData() {
     });
 }
 
-// Function to clear the scraped data _____________________________________________________________
+// Function to clear the scraped data ____________________________________________________________________________
 function clearScrapedData() {
     scrapedData.length = 0;
     articleList.innerHTML = '';
@@ -179,6 +177,12 @@ function clearScrapedData() {
 // Makes sure each item is clickable with correct url _____________________________________________________________
 function handleArticleClick(selectedItem) {
     displayArticleText(selectedItem.url);
+    // Set the title in the top bar
+    const articleTitleElement = document.getElementById('articleTitle');
+    const clickedItem = scrapedData.find(item => item.url === selectedItem.url);
+    if (clickedItem) {
+        articleTitleElement.textContent = clickedItem.title;
+    }
 }
 
 // Attach a single event listener to the articleList
@@ -190,6 +194,7 @@ articleList.addEventListener('click', (event) => {
             handleArticleClick({ url: articleURL });
         }
     }
+    hideArticleSearch();
 });
 
 // Function to fetch and display article text _____________________________________________________________
@@ -224,7 +229,7 @@ async function displayArticleText(url) {
     }
 }
 
-// Ensure Back Button is working and switching _____________________________________________________________
+// Ensure Back Button is working and switching ____________________________________________________________________________
 document.querySelector('i.fas.fa-arrow-left').closest('.top-left').addEventListener('click', () => {
     backButton();
 });
@@ -241,13 +246,13 @@ function backButton() {
 
 }
 
-// Search Functionality for Author List _____________________________________________________________
+// Search Functionality for Author List ____________________________________________________________________________
 document.addEventListener('DOMContentLoaded', function () {
     const authorList = document.querySelector('.author-list ul.author-grid');
     const authors = authorList.getElementsByTagName('li');
 
-    authorSearchInput.addEventListener('input', function () {
-        const searchTerm = authorSearchInput.value.toLowerCase();
+    authorSearch.addEventListener('input', function () {
+        const searchTerm = authorSearch.value.toLowerCase();
 
         for (let i = 0; i < authors.length; i++) {
             const authorName = authors[i].textContent.toLowerCase();
@@ -260,7 +265,30 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// Show/Hide the calender _____________________________________________________________
+// Search Functionality for Article List ____________________________________________________________________________
+document.addEventListener('DOMContentLoaded', function () {
+    if (articleSearch) {
+        articleSearch.addEventListener('input', function () {
+            const searchTerm = articleSearch.value.toLowerCase();
+            const articles = document.querySelectorAll('.list-item');
+            articles.forEach(article => {
+                const titleElement = article.querySelector('.list-item-right p strong');
+                if (titleElement) {
+                    const title = titleElement.textContent.toLowerCase();
+                    const isMatch = title.includes(searchTerm);
+                    // Show or hide the article based on the search result
+                    if (isMatch) {
+                        article.style.display = 'flex';
+                    } else {
+                        article.style.display = 'none';
+                    }
+                }
+            });
+        });
+    }
+});
+
+// Show/Hide the calender _____________________________________________________________________________________________
 dateIcon.addEventListener('click', function (event) {
     event.stopPropagation();
     AddCalendarDays(new Date().getFullYear(), new Date().getMonth(), dateIcon);
@@ -283,25 +311,23 @@ document.addEventListener('click', (event) => {
 });
 function showSettingsBox() {
     settingsBox.style.display = 'block';
-    settingsBox.style.bottom = '40px';
+    settingsBox.style.bottom = '50px';
     isSettingsBoxVisible = true;
 }
 function hideSettingsBox() {
-    settingsBox.style.bottom = '-250px';
+    settingsBox.style.bottom = '-275px';
     isSettingsBoxVisible = false;
 }
 // Changing article text based on selected option
 const textSizeSlider = document.getElementById('textSize');
 const lineHeightSlider = document.getElementById('lineHeight');
 const alignmentButtons = document.querySelectorAll('.text-icon-button');
-
 // Load saved settings when the page loads
 window.addEventListener('load', () => {
     // Load and apply the saved settings, or use default values if not saved
     const savedTextSize = localStorage.getItem('textSize') || '20';
     const savedLineHeight = localStorage.getItem('lineHeight') || '2';
     const savedAlignment = localStorage.getItem('alignment') || 'justify';
-
     // Apply the loaded settings
     textSizeSlider.value = savedTextSize;
     document.querySelector('.article-text').style.fontSize = `${savedTextSize}px`;
@@ -340,10 +366,8 @@ alignmentButtons.forEach(button => {
     });
 });
 
-
-
+// Auto Scroll Feature __________________________________________________________________________________________________________________________
 const scrollSpeed = document.getElementById('scrollSpeed');
-
 let scrollInterval = null;
 
 scrollSpeed.addEventListener('input', () => {
@@ -369,11 +393,56 @@ function startScroll(speed) {
         stopScroll(); // Stop scroll if speed is 0
     }
 }
-
-
 function stopScroll() {
     clearInterval(scrollInterval);
 }
+
+// Share Feature __________________________________________________________________________________________________________________________
+document.querySelector('i.fas.fa-share-alt').closest('.bottom-item-article').addEventListener('click', () => {
+    // Get the title and text elements
+    const articleTitle = document.getElementById('articleTitle');
+    if (articleTitle && articleText) {
+        // Check if the Web Share API is available
+        if (navigator.share) {
+            navigator.share({
+                title: 'Share Article',
+                text: `${articleTitle.textContent}\n\n${articleText.textContent}`,
+            })
+                .then(() => console.log('Shared successfully'))
+                .catch(error => console.error('Share error:', error));
+        } else {
+            alert('Web Share API is not supported in this browser.');
+        }
+    } else {
+        console.error('Title or text elements not found.');
+    }
+});
+
+
+function hideArticleSearch() {
+    const searchBox = document.querySelector('.search-box');
+    // Clear the search input
+    if (articleSearch) {
+        articleSearch.value = '';
+        articleSearch.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+    // Hide the search box
+    if (searchBox) {
+        searchBox.style.display = 'none';
+    }
+}
+
+// Add an event listener to the search icon to toggle the search box
+document.querySelector('i.fas.fa-search').closest('.top-right').addEventListener('click', () => {
+    const searchBox = document.querySelector('.search-box');
+    // Toggle the display property of the search box
+    if (searchBox.style.display === 'none' || searchBox.style.display === '') {
+        searchBox.style.display = 'block';
+    } else {
+        hideArticleSearch();
+    }
+});
+
 
 
 // Call the scrapeData function when the page loads
