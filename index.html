@@ -26,7 +26,7 @@
       <div class="top-left">
         <i class="fas fa-arrow-left"></i>
       </div>
-      <div class="top-middle">Title</div>
+      <div class="top-middle" id="articleTitle">Title Goes Here</div>
       <div class="top-right">
         <i class="fas fa-expand"></i>
       </div>
@@ -62,16 +62,17 @@
     </div>
 </div>
     <div class="screen" id="articles">
-      <div id="topMost"></div>
-      <div class="article-list"></div>
-		  <div class="article-text">
+      <div class="article-list">
+
       </div>
-      <a id="bottom"></a>
+		  <div class="article-text"></div>
+      <div class="search-box" style="display: none;">
+        <input type="text" placeholder="Search Articles" id="articleSearch">
     </div>
 </div>
-      <div class="screen" id="authors">
+    <div class="screen" id="authors">
     <div class="search-box">
-    <input type="text" placeholder="Search authors" id="authorSearchInput">
+    <input type="text" placeholder="Search Authors" id="authorSearch">
 </div>
     <div class="author-list">
         <ul class="author-grid">
@@ -108,7 +109,7 @@
       </div>
       <div class="bottom-item-article">
         <i class="fas fa-sliders-h"></i>
-        <span>Settings</span>
+        <span>Options</span>
       </div>
     </div>
 
