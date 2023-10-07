@@ -30,6 +30,12 @@ p {
   text-align: center;
 }
 
+.top-middle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .top-bar .top-left,
 .top-bar .top-right {
   padding: 10px;
@@ -134,7 +140,7 @@ p {
 .author-list {
   position: fixed;
   width: 100%;
-  top: 125px;
+  top: 100px;
   bottom: 50px;
   overflow-y: scroll;
   left: 0;
@@ -303,4 +309,39 @@ p {
 
 .text-icon-button-active {
   color: #007bff;
+}
+
+input[type="range"]{
+  -webkit-appearance:none;
+  width:85%;
+  height:20px;
+  margin:10px 50px;
+  background: linear-gradient(to right, #174fde 0%, #254dd3 100%);
+  background-size:100% 10px;
+  background-position:center;
+  background-repeat:no-repeat;
+  overflow:hidden;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  width:20px;
+  height:20px;
+  background:#007acc;
+  position:relative;
+  z-index:3;
+  box-shadow:0 0 5px 0 rgba(0,0,0,0.3);
+}
+
+input[type="range"]::-webkit-slider-thumb:after{
+  content:" ";
+  width:160px;
+  height:10px;
+  position:absolute;
+  z-index:1;
+  right:20px;
+  top:5px;
+  background: #007acc;
+  background: linear-gradient(to right, #f088fc 1%, #AC6CFF 70%);
 }
