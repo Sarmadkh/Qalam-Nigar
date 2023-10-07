@@ -215,7 +215,7 @@ async function displayArticleText(url) {
             articleText.appendChild(articleTextElement);
             articleText.classList.add('active');
             // Set the max-height of .article-text.active to the contentHeight
-            document.querySelector('.article-text.active').style.maxHeight = (document.querySelector('.content').offsetHeight - 50)  + 'px';
+            document.querySelector('.article-text.active').style.maxHeight = (document.querySelector('.content').offsetHeight - 52)  + 'px';
             articleList.classList.add('hidden');
             topBarMain.style.top = `-${topBarMain.offsetHeight}px`;
             topBarArticle.style.top = `0`;
