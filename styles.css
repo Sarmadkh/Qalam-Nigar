@@ -315,7 +315,7 @@ input[type="range"]{
   -webkit-appearance:none;
   width:85%;
   height:20px;
-  margin:10px 50px;
+  margin:10px 10px;
   background: linear-gradient(to right, #174fde 0%, #254dd3 100%);
   background-size:100% 10px;
   background-position:center;
