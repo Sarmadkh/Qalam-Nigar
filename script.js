@@ -100,7 +100,6 @@ function handleAuthorSelection(event) {
 // Attaching Click with Author List
 authorListItems.forEach(authorListItem => {
     authorListItem.addEventListener('click', handleAuthorSelection);
-
 });
 
 function getNewData(authorName, page) {
@@ -177,11 +176,13 @@ function clearScrapedData() {
 // Makes sure each item is clickable with correct url _____________________________________________________________
 function handleArticleClick(selectedItem) {
     displayArticleText(selectedItem.url);
-    // Set the title in the top bar
-    const articleTitleElement = document.getElementById('articleTitle');
-    const clickedItem = scrapedData.find(item => item.url === selectedItem.url);
-    if (clickedItem) {
-        articleTitleElement.textContent = clickedItem.title;
+    const listItem = document.querySelector(`[data-url="${selectedItem.url}"]`);
+    
+    if (listItem) {
+        const titleElement = listItem.querySelector('.list-item-right p strong');
+        if (titleElement) {
+            document.getElementById('articleTitle').textContent = titleElement.textContent;
+        }
     }
 }
 
@@ -194,7 +195,7 @@ articleList.addEventListener('click', (event) => {
             handleArticleClick({ url: articleURL });
         }
     }
-    hideArticleSearch();
+    toggleSearchBox();
 });
 
 // Function to fetch and display article text _____________________________________________________________
@@ -246,7 +247,8 @@ function backButton() {
 
 }
 
-// Search Functionality for Author List ____________________________________________________________________________
+// Search Functionality ______________________________________________________________________________________________________
+// Search Functionality for Author List
 document.addEventListener('DOMContentLoaded', function () {
     const authorList = document.querySelector('.author-list ul.author-grid');
     const authors = authorList.getElementsByTagName('li');
@@ -265,7 +267,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// Search Functionality for Article List ____________________________________________________________________________
+// Search Functionality for Article List
 document.addEventListener('DOMContentLoaded', function () {
     if (articleSearch) {
         articleSearch.addEventListener('input', function () {
@@ -285,6 +287,34 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
         });
+    }
+});
+
+// Function to toggle the display of all search boxes
+function toggleSearchBox() {
+    const searchBox = document.querySelectorAll('.search-box');
+    searchBox.forEach(searchBox => {
+        if (searchBox.style.display === 'none' || searchBox.style.display === '') {
+            searchBox.style.display = 'block';
+            const searchInput = searchBox.querySelector('input[type="text"]');
+            if (searchInput) {
+                searchInput.focus();
+            }
+        } else {
+            searchBox.style.display = 'none';
+            [articleSearch, authorSearch].forEach(searchInput => {
+                searchInput.value = '';
+                searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+            });
+        }
+    });
+}
+
+document.querySelector('i.fas.fa-search').closest('.top-right').addEventListener('click', toggleSearchBox);
+document.addEventListener('click', function (event) {
+    const searchBox = document.querySelector('.search-box');
+    if (searchBox.style.display === 'block' && !searchBox.contains(event.target) && event.target !== document.querySelector('i.fas.fa-search')) {
+        toggleSearchBox();
     }
 });
 
@@ -417,32 +447,6 @@ document.querySelector('i.fas.fa-share-alt').closest('.bottom-item-article').add
         console.error('Title or text elements not found.');
     }
 });
-
-
-function hideArticleSearch() {
-    const searchBox = document.querySelector('.search-box');
-    // Clear the search input
-    if (articleSearch) {
-        articleSearch.value = '';
-        articleSearch.dispatchEvent(new Event('input', { bubbles: true }));
-    }
-    // Hide the search box
-    if (searchBox) {
-        searchBox.style.display = 'none';
-    }
-}
-
-// Add an event listener to the search icon to toggle the search box
-document.querySelector('i.fas.fa-search').closest('.top-right').addEventListener('click', () => {
-    const searchBox = document.querySelector('.search-box');
-    // Toggle the display property of the search box
-    if (searchBox.style.display === 'none' || searchBox.style.display === '') {
-        searchBox.style.display = 'block';
-    } else {
-        hideArticleSearch();
-    }
-});
-
 
 
 // Call the scrapeData function when the page loads
