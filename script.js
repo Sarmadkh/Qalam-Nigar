@@ -399,14 +399,28 @@ alignmentButtons.forEach(button => {
 // Auto Scroll Feature __________________________________________________________________________________________________________________________
 const scrollSpeed = document.getElementById('scrollSpeed');
 let scrollInterval = null;
+let wakeLock = null; // Initialize wake lock variable
 
 scrollSpeed.addEventListener('input', () => {
     const speed = parseInt(scrollSpeed.value, 10);
-    startScroll(speed);
+    if (speed > 0) {
+        startScroll(speed);
+    } else {
+        stopScroll();
+    }
 });
 
 function startScroll(speed) {
     if (speed > 0) {
+        // Request a wake lock to keep the screen on
+        if ('wakeLock' in navigator) {
+            navigator.wakeLock.request('screen').then((lock) => {
+                wakeLock = lock;
+            }).catch((error) => {
+                alert('Keep Scree On Not Supported');
+            });
+        }
+        
         stopScroll(); // Stop any ongoing scroll
         // Adjust the scrollStep value to change the scrolling speed
         const scrollStep = speed;
@@ -420,11 +434,17 @@ function startScroll(speed) {
             }
         }, intervalDelay);
     } else {
-        stopScroll(); // Stop scroll if speed is 0
+        stopScroll();
     }
 }
+
 function stopScroll() {
     clearInterval(scrollInterval);
+    // Release the wake lock when scrolling stops
+    if (wakeLock) {
+        wakeLock.release();
+        wakeLock = null;
+    }
 }
 
 // Share Feature __________________________________________________________________________________________________________________________
@@ -441,7 +461,7 @@ document.querySelector('i.fas.fa-share-alt').closest('.bottom-item-article').add
                 .then(() => console.log('Shared successfully'))
                 .catch(error => console.error('Share error:', error));
         } else {
-            alert('Web Share API is not supported in this browser.');
+            alert('Please use a latest Browser');
         }
     } else {
         console.error('Title or text elements not found.');
