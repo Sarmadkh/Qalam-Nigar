@@ -461,7 +461,7 @@ document.querySelector('i.fas.fa-share-alt').closest('.bottom-item-article').add
                 .then(() => console.log('Shared successfully'))
                 .catch(error => console.error('Share error:', error));
         } else {
-            alert('Please use a latest Browser');
+            alert('Please use a Latest Browser');
         }
     } else {
         console.error('Title or text elements not found.');
