@@ -216,6 +216,7 @@ async function displayArticleText(url) {
             articleText.classList.add('active');
             // Set the max-height of .article-text.active to the contentHeight
             document.querySelector('.article-text.active').style.maxHeight = (document.querySelector('.content').offsetHeight - 52)  + 'px';
+            document.querySelector('.scroll-indicator').style.display = 'block';
             articleList.classList.add('hidden');
             topBarMain.style.top = `-${topBarMain.offsetHeight}px`;
             topBarArticle.style.top = `0`;
@@ -240,6 +241,7 @@ function backButton() {
     articleText.innerHTML = '';
     articleText.classList.remove('active');
     articleList.classList.remove('hidden');
+    document.querySelector('.scroll-indicator').style.display = 'none';
     topBarMain.style.top = '0'
     topBarArticle.style.top = `-${topBarArticle.offsetHeight}px`;
     bottomBarMain.style.bottom = '0';
