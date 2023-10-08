@@ -491,5 +491,10 @@ function showBars() {
         document.querySelector('.minimize-button').style.display = 'none';
 }
 
+// Progress Bar Feature __________________________________________________________________________________________________________________________
+articleText.addEventListener('scroll', () => {
+    document.querySelector('.scroll-progress').style.width = (articleText.scrollTop / (articleText.scrollHeight - articleText.clientHeight)) * 100 + `%`;
+});
+
 // Call the scrapeData function when the page loads
 window.addEventListener('load', scrapeData());
