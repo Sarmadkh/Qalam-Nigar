@@ -448,6 +448,28 @@ document.querySelector('i.fas.fa-share-alt').closest('.bottom-item-article').add
     }
 });
 
+// Full Screen Feature __________________________________________________________________________________________________________________________
+document.querySelector('i.fas.fa-expand').closest('.top-right').addEventListener('click', () => {
+    hideBars();
+});
+document.querySelector('i.fas.fa-compress').closest('.minimize-button').addEventListener('click', () => {
+    showBars();
+});
+
+function hideBars() {
+        topBarArticle.style.display = 'none';
+        bottomBarArticle.style.display = 'none';
+        document.querySelector('.content').style.position = 'initial'
+        document.querySelector('.article-text.active').style.maxHeight = (window.innerHeight - 42)  + 'px';
+        document.querySelector('.minimize-button').style.display = 'flex';
+}
+function showBars() {
+        topBarArticle.style.display = 'flex';
+        bottomBarArticle.style.display = 'flex';
+        document.querySelector('.content').style.position = 'fixed'
+        document.querySelector('.article-text.active').style.maxHeight = (document.querySelector('.content').offsetHeight - 52)  + 'px';
+        document.querySelector('.minimize-button').style.display = 'none';
+}
 
 // Call the scrapeData function when the page loads
 window.addEventListener('load', scrapeData());
