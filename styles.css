@@ -162,6 +162,7 @@ p {
   gap: 10px;
   padding: 10px;
   list-style: none;
+  width: -webkit-fill-available;
 }
 
 .author-grid li {
@@ -346,8 +347,9 @@ input[type="range"]::-webkit-slider-thumb:after{
 .minimize-button {
   position: fixed;
   cursor: pointer;
-  top: 0;
-  right: 0;
+  transform: translate(-50%);
+  top: 85%;
+  left: 50%;
   padding: 15px;
   width: 25px;
   background: #2f2f2fc2;
