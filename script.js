@@ -11,7 +11,6 @@ const topBarMain = document.getElementById('top-bar-main');
 const bottomBarMain = document.getElementById('bottom-bar-main');
 const topBarArticle = document.getElementById('top-bar-article');
 const bottomBarArticle = document.getElementById('bottom-bar-article');
-const dateIcon = document.querySelector('i.far.fa-calendar-alt').closest('.top-left');
 const settingsBox = document.querySelector('.text-options-box');
 let page = 1;
 let selectedAuthor = "";
@@ -239,14 +238,15 @@ document.querySelector('i.fas.fa-arrow-left').closest('.top-left').addEventListe
 function backButton() {
     document.querySelector('.article-text.active').style.maxHeight = 0  + 'px';
     articleText.innerHTML = '';
+    showBars();
     articleText.classList.remove('active');
     articleList.classList.remove('hidden');
     document.querySelector('.scroll-indicator').style.display = 'none';
+    document.querySelector('.scroll-progress').style.width = '0%';
     topBarMain.style.top = '0'
     topBarArticle.style.top = `-${topBarArticle.offsetHeight}px`;
     bottomBarMain.style.bottom = '0';
     bottomBarArticle.style.bottom = `-${bottomBarArticle.offsetHeight}px`;
-
 }
 
 // Search Functionality ______________________________________________________________________________________________________
@@ -321,6 +321,7 @@ document.addEventListener('click', function (event) {
 });
 
 // Show/Hide the calender _____________________________________________________________________________________________
+const dateIcon = document.querySelector('i.far.fa-calendar-alt').closest('.top-left');
 dateIcon.addEventListener('click', function (event) {
     event.stopPropagation();
     AddCalendarDays(new Date().getFullYear(), new Date().getMonth(), dateIcon);
@@ -451,22 +452,20 @@ function stopScroll() {
 
 // Share Feature __________________________________________________________________________________________________________________________
 document.querySelector('i.fas.fa-share-alt').closest('.bottom-item-article').addEventListener('click', () => {
-    // Get the title and text elements
     const articleTitle = document.getElementById('articleTitle');
-    if (articleTitle && articleText) {
-        // Check if the Web Share API is available
-        if (navigator.share) {
-            navigator.share({
-                title: 'Share Article',
-                text: `${articleTitle.textContent}\n\n${articleText.textContent}`,
-            })
-                .then(() => console.log('Shared successfully'))
-                .catch(error => console.error('Share error:', error));
-        } else {
-            alert('Please Use Any Latest Browser');
-        }
+    if (articleTitle && articleText && window.AppInventor && window.AppInventor.setWebViewString) {
+        // Use window.AppInventor.setWebViewString if available
+        window.AppInventor.setWebViewString(`${articleTitle.textContent}\n\n${articleText.textContent}`);
+    } else if (navigator.share) {
+        // Use Web Share API as a fallback
+        navigator.share({
+            title: 'Share Article',
+            text: `${articleTitle.textContent}\n\n${articleText.textContent}`,
+        })
+        .then(() => console.log('Shared successfully'))
+        .catch(error => console.error('Share error:', error));
     } else {
-        console.error('Title or text elements not found.');
+        alert('Please Use Any Latest Browser');
     }
 });
 
@@ -484,6 +483,9 @@ function hideBars() {
         document.querySelector('.content').style.position = 'initial'
         document.querySelector('.article-text.active').style.maxHeight = (window.innerHeight - 42)  + 'px';
         document.querySelector('.minimize-button').style.display = 'flex';
+        if (window.AppInventor && window.AppInventor.setWebViewString) {
+            window.AppInventor.setWebViewString(`Full Screen`);
+        }
 }
 function showBars() {
         topBarArticle.style.display = 'flex';
@@ -491,12 +493,26 @@ function showBars() {
         document.querySelector('.content').style.position = 'fixed'
         document.querySelector('.article-text.active').style.maxHeight = (document.querySelector('.content').offsetHeight - 52)  + 'px';
         document.querySelector('.minimize-button').style.display = 'none';
+        if (window.AppInventor && window.AppInventor.setWebViewString) {
+            window.AppInventor.setWebViewString(`Exit Screen`);
+        }
 }
 
 // Progress Bar Feature __________________________________________________________________________________________________________________________
 articleText.addEventListener('scroll', () => {
     document.querySelector('.scroll-progress').style.width = (articleText.scrollTop / (articleText.scrollHeight - articleText.clientHeight)) * 100 + `%`;
 });
+
+
+// Lottie Animation
+const animation = lottie.loadAnimation({
+    container: document.getElementById('lottie-empty'), 
+    renderer: 'svg',
+    loop: true,
+    autoplay: true,
+    path: 'empty.json'
+  });
+
 
 // Call the scrapeData function when the page loads
 window.addEventListener('load', scrapeData());
