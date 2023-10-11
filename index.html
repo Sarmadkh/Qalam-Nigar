@@ -1,87 +1,1072 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
-	 <link rel="stylesheet" href="date-picker.css">
 
-    <title>Qaalim</title>
-	  <link rel="icon" href="icon.png" type="image/png">
-  </head>
-  <body>
-    <div class="top-bar" id="top-bar-main" style="display: flex;">
-      <div class="top-left">
-        
-        <i class="far fa-calendar-alt" class="date-picker"></i>
-      </div>
-      <div class="top-middle">Articles</div>
-      <div class="top-right">
-          <i class="fas fa-search"></i>
-      </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.8/lottie.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="date-picker.css">
+
+  <title>Qaalim</title>
+  <link rel="icon" href="icon.png" type="image/png">
+</head>
+
+<body>
+  <div class="top-bar" id="top-bar-main" style="display: flex;">
+    <div class="top-left">
+
+      <i class="far fa-calendar-alt" class="date-picker"></i>
+    </div>
+    <div class="top-middle">Articles</div>
+    <div class="top-right">
+      <i class="fas fa-search"></i>
+    </div>
   </div>
 
   <div class="top-bar" id="top-bar-article" style="top: -100%;">
-      <div class="top-left">
-        <i class="fas fa-arrow-left"></i>
-      </div>
-      <div class="top-middle" id="articleTitle">Title Goes Here</div>
-      <div class="top-right">
-        <i class="fas fa-expand"></i>
-      </div>
+    <div class="top-left">
+      <i class="fas fa-arrow-left"></i>
+    </div>
+    <div class="top-middle" id="articleTitle">Title Goes Here</div>
+    <div class="top-right">
+      <i class="fas fa-expand"></i>
+    </div>
   </div>
-<div class="content">
-	
-  <div class="text-options-box">
-    <div class="text-options">
-      <span>Font Size</span>
+  <div class="content">
+
+    <div class="text-options-box">
+      <div class="text-options">
+        <span>Font Size</span>
         <i class="fas fa-text-height text-icon-button"></i>
         <input type="range" class="text-slider" id="textSize" min="10" max="40" step="5" value="20">
-    </div>
+      </div>
 
-    <div class="text-options">
-      <span>Line Height</span>
+      <div class="text-options">
+        <span>Line Height</span>
         <i class="fas fa-ruler-vertical text-icon-button"></i>
         <input type="range" class="text-slider" id="lineHeight" min="1" max="4" step="1" value="2">
-    </div>
+      </div>
 
-    <div class="text-options">
-      <span>Auto Scroll</span>
-      <i class="fas fa-angle-double-down text-icon-button"></i>
-      <input type="range" class="text-slider" id="scrollSpeed" min="0" max="5" step="1" value="0">
-    </div>
+      <div class="text-options">
+        <span>Auto Scroll</span>
+        <i class="fas fa-angle-double-down text-icon-button"></i>
+        <input type="range" class="text-slider" id="scrollSpeed" min="0" max="5" step="1" value="0">
+      </div>
 
-    <div class="text-options">
+      <div class="text-options">
         <div class="text-icons">
-            <button class="text-icon-button" id="left"><i class="fas fa-align-left"></i></button>
-            <button class="text-icon-button" id="center"><i class="fas fa-align-center"></i></button>
-            <button class="text-icon-button" id="justify"><i class="fas fa-align-justify"></i></button>
-            <button class="text-icon-button" id="right"><i class="fas fa-align-right"></i></button>
+          <button class="text-icon-button" id="left"><i class="fas fa-align-left"></i></button>
+          <button class="text-icon-button" id="center"><i class="fas fa-align-center"></i></button>
+          <button class="text-icon-button" id="justify"><i class="fas fa-align-justify"></i></button>
+          <button class="text-icon-button" id="right"><i class="fas fa-align-right"></i></button>
         </div>
+      </div>
     </div>
-</div>
     <div class="screen" id="articles">
       <div class="article-list"></div>
-      <div class="scroll-indicator" style="display: none;"><div class="scroll-progress"></div></div>
+      <div class="scroll-indicator" style="display: none;">
+        <div class="scroll-progress"></div>
+      </div>
       <div class="minimize-button" style="display: none;"><i class="fas fa-compress"></i></div>
-		  <div class="article-text"></div>
+      <div class="article-text"></div>
       <div class="search-box" style="display: none;">
         <input type="text" placeholder="Search Articles" id="articleSearch">
-    </div>
-</div>
-    <div class="screen" id="authors">
-    <div class="search-box" style="display: none;">
-    <input type="text" placeholder="Search Authors" id="authorSearch">
-</div>
-    <div class="author-list">
-        <ul class="author-grid">
-<li>Aaghar Nadeem Sahar</li><li>Aamer Hayat Bhandara</li><li>Aamir Zahoor</li><li>Aasim Irshad</li><li>Abbas Mehkari</li><li>Abdul Basit</li><li>Abdul Ghafar Qaiserani</li><li>Abdul Ghaffar Aziz</li><li>Abdul Hameed</li><li>Abdul Qadir Hassan</li><li>Abdul Rafeh Rasool</li><li>Abdul Raoof</li><li>Abdullah Babar Awan</li><li>Abdullah Butt</li><li>Abdullah Tariq Sohail</li><li>Abdurehman Khan</li><li>Abeer Annas</li><li>Abid Ali</li><li>Abid Hashmi</li><li>Abid Mehmood Azaam</li><li>Abid Mir</li><li>Abid Tahami</li><li>Abu Nasar</li><li>Adnan Adil</li><li>Adnan Adil Zaidi</li><li>Adnan Ashraf</li><li>Adnan Randhawa</li><li>Afaq Maqsood Bhullah</li><li>Aftab Ahmad</li><li>Aftab Ahmad Khanzada</li><li>Aftab Iqbal</li><li>Afzaal Rehan</li><li>Afzal Rehmaan</li><li>Afzal Ur Rehman</li><li>Agha Masood Hussain</li><li>Agha Masood Shorish</li><li>Agha Mehmood ul Hassan Lodhi</li><li>Agha Shoaib Abbas</li><li>Ahfaz Ur Rahman</li><li>Ahmad Ijaz</li><li>Ahmad Khan</li><li>Ahmad Rasheed</li><li>Ahmad Sarfraz</li><li>Ahsan Iqbal</li><li>Ahsan Ur Rehman</li><li>Ahtesham Ul Haq</li><li>Ahtisham Musa</li><li>Aima Mehmood</li><li>Aimen Tanveer</li><li>Aini Niazi</li><li>Aisha Arshad</li><li>Ajmal Jami</li><li>Ajmal Khatak Kashar</li><li>Ajmal Shams</li><li>Ajwa Rasheed</li><li>Akhtar Bukhari</li><li>Akhtar Hussain</li><li>Akmal Aleemi</li><li>Ali Ahmad Dhillon</li><li>Ali Akbar Natiq</li><li>Ali Asghar</li><li>Ali Furqan Kayani</li><li>Ali Moeen Nawazish</li><li>Ali Raza Ahmad</li><li>Ali Raza Alvi</li><li>Ali Shan Mughal</li><li>Ali Sultan</li><li>Allama Ibtisam Ilahi Zaheer</li><li>Allama Muhammad Ilyas Attar Qadri</li><li>Allama Muhammad Raghib Hussain Naeemi</li><li>Allama Muhammad Shahid Madni</li><li>Altaf Ahmad</li><li>Altaf Hassan Qureshi</li><li>Altaf Hussain</li><li>Amar Jaleel</li><li>Amber Zaidi</li><li>Ameer Hamza</li><li>Ameer Hamza Sanglavi</li><li>Amir Jameel</li><li>Amir Khakwani</li><li>Amira Ehsan</li><li>Amirjan Haqqani</li><li>Amjad Bukhari</li><li>Amjad Islam Amjad</li><li>Ammar Chaudhry</li><li>Ammar Masood</li><li>Amna Ahmad</li><li>Amna Liaqat Chaudhry</li><li>Andleeb Abbas</li><li>Aneeq Ali</li><li>Anees Baqar</li><li>Anees Haroon</li><li>Anees Mansori</li><li>Anjum Farooq</li><li>Anjum Niaz</li><li>Ansar Abbasi</li><li>Anwar Farhad</li><li>Anwar Ghazi</li><li>Anwar Hussain Haqqi</li><li>Aqeel Abbas</li><li>Aqeel Ahmad Anjum Awan</li><li>Arbaz Raza Bhutta</li><li>Arham Junaid</li><li>Arif Anis Malik</li><li>Arif Hashmi</li><li>Arif Nizami</li><li>Arif Uzaman</li><li>Arshad Jelani</li><li>Arshad Mehmood</li><li>Arshad Waheed Choudhary</li><li>Arshan Zafar</li><li>Arslan Khalid</li><li>Arslan Sarwar</li><li>Arundhati Roy</li><li>Asaad Abdul Rehman</li><li>Asad Ahmad</li><li>Asad Mufti</li><li>Asad Tahir Jappa</li><li>Asad Ullah Khan</li><li>Asadullah Ghalib</li><li>Asar Chauhan</li><li>Asghar Abdullah</li><li>Asghar Shamall</li><li>Asghar Sial</li><li>Ashar Najmi</li><li>Ashfaq Ullah Jan Dagai</li><li>Ashraf Sharif</li><li>Asif Afan</li><li>Asif Butt</li><li>Asif Mehmood</li><li>Asif Sohail Muzaffar</li><li>Asif Zaidi</li><li>Asim Khan</li><li>Asim Khawaja</li><li>Aslam Awan</li><li>Aslam Gordaspuri</li><li>Aslam Khan</li><li>Aslam Khan Khichi</li><li>Aslam Khokhar</li><li>Asma Imran</li><li>Asma Tariq</li><li>Asmatgul Khattak</li><li>Ata Ul Haq Qasmi</li><li>Athar Qadir Hassan</li><li>Atif Iqbal Advocate</li><li>Atta Ur Rehman</li><li>Awais Hafiz</li><li>Awais Qayyum Rana</li><li>Awais Ur Rehman</li><li>Ayaz Amir</li><li>Ayaz Khan</li><li>Ayaz Rana</li><li>Aysha Jamal</li><li>Azeem M Mian</li><li>Azeem Sarwar</li><li>Azhar Khayal</li><li>Azhar Shah</li><li>Azi Khawaja</li><li>Aziz Zahira Malik</li><li>Babar Ayaz</li><li>Babar Sattar</li><li>Barkha Dutt</li><li>Barrister Aitzaz Ahsan</li><li>Barrister Ali Zafar</li><li>Barrister Amir Hassan</li><li>Barrister Hameed Bashani</li><li>Basham Bachani</li><li>Bashir Riaz</li><li>Bharat Boshan</li><li>Bilal Saleem</li><li>Bilal Ur Rasheed</li><li>Bilawal Bhutto Zardari</li><li>Bill Gates</li><li>Bint e Aslam</li><li>Brigadier Arshad Malik</li><li>Brigadier Faisal Masud</li><li>Brigadior Mazhar Abbas</li><li>Bushra Hassan</li><li>Bushra Ijaz</li><li>Chaudhary Fawad Hussain</li><li>Chaudhary Wasim Tariq</li><li>Choudhri Muhammad Latif</li><li>Danish Younus</li><li>Dastageer Bhatti</li><li>Dekan Walish</li><li>Dr. Aamir Liaquat Hussain</li><li>Dr. Abdul Qadeer Khan</li><li>Dr. Afaan Qaiser</li><li>Dr. Ahmad Saleem</li><li>Dr. Ajmal Niazi</li><li>Dr. Akhtar Shumar</li><li>Dr. Amjad Saqib</li><li>Dr. Anwar Sadeed</li><li>Dr. Arif Alvi</li><li>Dr. Arshad Altaf</li><li>Dr. Ashfaq Ahmad Virk</li><li>Dr. Ashfaq Hassan Khan</li><li>Dr. Atta Ur Rahman</li><li>Dr. Ayesha Siddiqa</li><li>Dr. Babar Awan</li><li>Dr. Bharat</li><li>Dr. Fareed Ahmad</li><li>Dr. Fareed Ahmad Paracha</li><li>Dr. Farrukh Saleem</li><li>Dr. Furqan Hameed</li><li>Dr. Hasan Askari Rizvi</li><li>Dr. Hussain Ahmed Paracha</li><li>Dr. Hussain Muhaye Udin</li><li>Dr. Ibrahim Mughal</li><li>Dr. Iftikhar Hussain Bukhari</li><li>Dr. Ikram Ul Haq</li><li>Dr. Imrana Mushtaq</li><li>Dr. Javed Laghari</li><li>Dr. Khalid Javed Jaan</li><li>Dr. Lal Khan</li><li>Dr. Majeed Khan</li><li>Dr. Maleeha Lodhi</li><li>Dr. Mansoor Noorani</li><li>Dr. Manzoor Ijaz</li><li>Dr. Mirza Ikhtiar Baig</li><li>Dr. Mubarak Ali</li><li>Dr. Mughees Uddin Sheikh</li><li>Dr. Muhammad Tayyab Khan Singhanvi</li><li>Dr. Muhammad Yasin</li><li>Dr. Mujahid Mansoori</li><li>Dr. Munawar Sabir</li><li>Dr. Nabeel Chaudhry</li><li>Dr. Nadeem Gilani</li><li>Dr. Nasir Mustehsin</li><li>Dr. Rabia Khurram</li><li>Dr. Rafi Udin Hashmi</li><li>Dr. Rasheed Ahmad Khan</li><li>Dr. Rashid Bin Masood</li><li>Dr. Sabir Badar Jaffri</li><li>Dr. Sadaf Akbar</li><li>Dr. Safdar Mahmood</li><li>Dr. Sajjad</li><li>Dr. Shahid Hassan Siddiqui</li><li>Dr. Shahida Dilawar Shah</li><li>Dr. Shehla Kazmi</li><li>Dr. Sughra Sadaf</li><li>Dr. Tahir Ashraf</li><li>Dr. Tahir Masood</li><li>Dr. Tahir Raza Bukhari</li><li>Dr. Tahir Ul Qadri</li><li>Dr. Talat Shabbir</li><li>Dr. Talib Sial</li><li>Dr. Tariq Rustam</li><li>Dr. Tehzeeb Fatima</li><li>Dr. Ved Pratap Vaidik</li><li>Dr. Waqar Yousuf Azeemi</li><li>Dr. Younas Hasni</li><li>Dr. Zahid Munir Amir</li><li>Durdana Najam</li><li>Ejaz Hafeez Khan</li><li>Engineer Khurram Dastgir Khan</li><li>Esaar Rana</li><li>Esha Qaisar</li><li>Faheem Khan</li><li>Faisal Farooque</li><li>Faisal Mehran</li><li>Faislan Shafa Isfahani</li><li>Faiza Meer</li><li>Fakhra Olakh Advocate</li><li>Farah Naz</li><li>Farah Nazz Asfahani</li><li>Farah Sadia</li><li>Fareeha Mubarak</li><li>Fareena Almas</li><li>Farhat Tahir Shah</li><li>Farheen Sheikh</li><li>Farogh Marghoob Sidique</li><li>Farooq A Haris</li><li>Farooq Adil</li><li>Farooq Bahaul Haq</li><li>Farooq Chohan</li><li>Farooq Faisal Khan</li><li>Farooq Haroon</li><li>Farooq Nadeem</li><li>Farooq Qaiser</li><li>Farooq Tariq</li><li>Farrukh Khan Patafi</li><li>Farrukh Sohail Goendi</li><li>Farzana Khursheed</li><li>Fatima Ahtisham</li><li>Fatima Bhutto</li><li>Fatima Mustafa</li><li>Fatima Naqvi</li><li>Fayaz Ul Hassan Chohan</li><li>Fazal Rabi Rahi</li><li>Fida Khatak</li><li>Fida Muhammad Adeel</li><li>Fiza Basham</li><li>Fozia Mughal</li><li>Furqan Qureshi</li><li>G.N Mughal</li><li>Ghazala Aziz</li><li>Ghazali Farooq</li><li>Ghazanfar Hashmi</li><li>Ghazi Salah Udin</li><li>Ghulaam Murtaza</li><li>Ghulam Muhayyu Din</li><li>Gul e Nokhaiz Akhtar</li><li>Gulfam Ali</li><li>Gull Farkhanda</li><li>Habib Akram</li><li>Habib ur Rehman</li><li>Hafeez Ullah Niazi</li><li>Hafiz Ameer Hamza</li><li>Hafiz Muhammad Faisal Khalid</li><li>Hafiz Muhammad Idrees</li><li>Hafiz Muhammad Saeed</li><li>Hafiz Sanaullah</li><li>Hafiz Shafiq Ur Rehman</li><li>Hafiz Syed Riaz Hussain Najfi</li><li>Hafiz Zohaib Tayyab</li><li>Haider Abbas Gardaizi</li><li>Haider Javed Syed</li><li>Haji Ghulam Raza</li><li>Hakeem Ahmad Hussain</li><li>Hakim Tariq Chugtai</li><li>Hakim Zeeshan</li><li>Hameed Ahmad Sethi</li><li>Hamid Mir</li><li>Hammad Hassan</li><li>Hamraaz Ahsan</li><li>Hamza Bhatti</li><li>Hamza Khalil</li><li>Hania Irmiya</li><li>Haris Akhtar Raja</li><li>Haris Masood</li><li>Haroon Ur Rasheed</li><li>Hashir Irshad</li><li>Hashmat Ullah Siddique</li><li>Hasnain Haider</li><li>Hasnain Jamil</li><li>Hassan Hafeez</li><li>Hassan Iqbal</li><li>Hassan Jaffer</li><li>Hassan Mujtaba</li><li>Hassan Nisar</li><li>Hassan Rizvi Advocate</li><li>Hassan Sarwar</li><li>Humayun Shahid</li><li>Husnain Jamal</li><li>Hussam Hur</li><li>Huzaifa Rehman Qureshi</li><li>Huzaifa Sinan</li><li>I.H. Syed</li><li>Ibn e Fazil</li><li>Ibrahim Azmi</li><li>Ibrahim Raja</li><li>Idrees Bakhtiar</li><li>Ifra Sajid</li><li>Iftekhar Gillani</li><li>Iftikhar Ahmad</li><li>Ijaz Ahmad</li><li>Ijaz Ul Haq</li><li>Ijaz Zaka Syed</li><li>Ikram Sehgal</li><li>Ilyas Shakir</li><li>Immad Abbasi</li><li>Imran Amin</li><li>Imran Hussain Choudhary</li><li>Imran Khan</li><li>Imran Shahid Bhandar</li><li>Imran Yaqoob Khan</li><li>Imtiaaz Alam</li><li>Imtiaz Gul</li><li>Intekhab Aslam Khan</li><li>Intizar Hussain</li><li>Iqbal Khan Manj</li><li>Iqbal Khursheed</li><li>Iqbal Shahid</li><li>Iqbal Yousaf</li><li>Iqra Maqbool</li><li>Iqra Sajjad</li><li>Iqtidar Javed</li><li>Irfan Ali</li><li>Irfan Hussain</li><li>Irfan Siddiqui</li><li>Irshad Ahmad Arif</li><li>Irshad Bhatti</li><li>Irshad Mehmood</li><li>Ishtiaq Baig</li><li>Ismat Gull Khatak</li><li>Jabbar Jaffer</li><li>Jabbar Mirza</li><li>Jabbar Qureshi</li><li>Jaffer Khan Tareen</li><li>Jahangir Badar</li><li>Jahid Ahmad</li><li>Jameel Ahmad Adeel</li><li>Jameel Udin Aali</li><li>Jamil Marghuz</li><li>Javed Ahmad Ghamidi</li><li>Javed Chaudhry</li><li>Javed Hafeez</li><li>Javed Hashmi</li><li>Javed Jabar</li><li>Javed Kahlon</li><li>Javed Malik</li><li>Javed Qazi</li><li>Javed Saba</li><li>Javed Siddiq</li><li>Javeria Siddique</li><li>Jawad Ahmad</li><li>Jawad Nazir</li><li>Jhangir Shah Kakar</li><li>Junaid S. Abbas</li><li>Justice Hazikul Khairi</li><li>Justice Javed Iqbal</li><li>Justice Rai Mando</li><li>Kaleem Zubair</li><li>Kamran Goraya</li><li>Kamran Malik</li><li>Kamran Shahid</li><li>Kamran Tufail</li><li>Kanwar Muhammad Dilshad</li><li>Kashan Yaqoob</li><li>Kashif Bashir Khan</li><li>Khalid Baloch</li><li>Khalid Goraya</li><li>Khalid H Lodhi</li><li>Khalid Masood Khan</li><li>Khalid Mehmood</li><li>Khalid Mehmood Rasool</li><li>Khalid Rasheed</li><li>Khalid Sheikh</li><li>Khalid Zahid</li><li>Khalil Ahmad Naini Taal Wala</li><li>Khan Iftekhar Muhammad</li><li>Khawaja Amaan Azeez</li><li>Khawaja Izhar Ul Hassan</li><li>Khawaja Jameel Ahmad</li><li>Khawar Naeem Hashmi</li><li>Khizar Klasra</li><li>Khurram Ali Rao</li><li>Khurram Sameer</li><li>Khurram Sohail</li><li>Khursheed Nadeem</li><li>Khwaja Naveed Ahmad</li><li>Khwaja Saad Rafique</li><li>Kishwar Naheed</li><li>Kishwar Zahra</li><li>Kuldip Nayar</li><li>Latif Choudhry</li><li>Leena Hashir</li><li>Liaqat Baloach</li><li>Liaqat Rajpar</li><li>Lubna Jamshed</li><li>Lubna Safdar</li><li>Lubna Zaheer</li><li>Luqman Sharif</li><li>M Ibrahim Khan</li><li>M Wadood Sajid</li><li>M. Aslam</li><li>M.B Anjum</li><li>M.I Khalil</li><li>M.J Gohar</li><li>M.R Malik</li><li>Maaz Bin Mahmood</li><li>Madiha Parveen</li><li>Mah Naz Rehman</li><li>Maham Maqsood</li><li>Maheen Khan</li><li>Mahmood Shaam</li><li>Mahnoor Rizwan</li><li>Majeed Asghar</li><li>Majeed Rehmani</li><li>Majid Sadiq Nizami</li><li>Makhdoom Athar</li><li>Maleeha Hashmi</li><li>Malik Altaf Hussain</li><li>Malik Anwar Hussain Burhan</li><li>Malik Tahir Javed</li><li>Manjari Chatterjee Miller</li><li>Mansoor Afaq</li><li>Mansoor Ahmad</li><li>Mansoor Khalid</li><li>Manzoor Mallah</li><li>Manzoor Razi</li><li>Marosha Muzafar</li><li>Marvi Memon</li><li>Maryam Arshad</li><li>Masood Ashar</li><li>Masood Malik</li><li>Mazhar Barlas</li><li>Mazhar Choudhry</li><li>Mazhar Joiya</li><li>Mazhar Khokhar</li><li>Mazhar Minhas</li><li>Mehdi Ali</li><li>Meher Bukhari</li><li>Mehmood Alam Khalid</li><li>Mehmood Jan Babar</li><li>Mehmood Mirza</li><li>Mehnaz Rafi</li><li>Mian Amir Mehmood</li><li>Mian Imran Ahmad</li><li>Mian Muhammad Ashraf Asmi Advocate</li><li>Mian Muhammad Shehbaz Sharif</li><li>Mian Tariq Misbah</li><li>Mohammad Farhad Nadeem</li><li>Mohsin Goraya</li><li>Mohtarma Asma Jahangir</li><li>Molana Mufti Muhammad Rafi Usmani</li><li>Molana Tanvir ul Haq Thanvi</li><li>Mona Khan</li><li>Muaz Bin Izhar</li><li>Mubarak Haider</li><li>Mubashir Ali Zaidi</li><li>Mubeen Rasheed</li><li>Mudassar Aslam</li><li>Mudassir Iqbal Butt</li><li>Mufti Muneeb Ur Rehman</li><li>Muhammad Abdul Hameed</li><li>Muhammad Abdullah Butt</li><li>Muhammad Abdullah Gul</li><li>Muhammad Ahmad Sabzwari</li><li>Muhammad Altaf</li><li>Muhammad Altaf Qamar</li><li>Muhammad Amanat Rasool</li><li>Muhammad Amir Rana</li><li>Muhammad Anwar Gray Wall</li><li>Muhammad Arif Shah</li><li>Muhammad Arshad</li><li>Muhammad Arslan</li><li>Muhammad Asad Shah</li><li>Muhammad Asad Waqas</li><li>Muhammad Aslam Ghuman</li><li>Muhammad Azam Khan Swati</li><li>Muhammad Babar Taimoor</li><li>Muhammad Bilal Ghauri</li><li>Muhammad Faisal Shehzad</li><li>Muhammad Farooq Chouhan</li><li>Muhammad Fayaz Udin</li><li>Muhammad Haider Amin</li><li>Muhammad Hamza Ali</li><li>Muhammad Haroon</li><li>Muhammad Hussain Hunarmal</li><li>Muhammad Ijaz Mian</li><li>Muhammad Iqbal Choudhary</li><li>Muhammad Irfan Chandio</li><li>Muhammad Irfan Nadeem</li><li>Muhammad Irfan Siddiqui</li><li>Muhammad Ishaq Dar</li><li>Muhammad Ishtiaq</li><li>Muhammad Izhar Ul Haq</li><li>Muhammad Junaid</li><li>Muhammad Kamran</li><li>Muhammad Kamran Khan</li><li>Muhammad Khan</li><li>Muhammad Mahdi</li><li>Muhammad Mansoor Khan</li><li>Muhammad Mazhar Rasheed</li><li>Muhammad Muneeb Ishfaq</li><li>Muhammad Naveed Aslam</li><li>Muhammad Qadir Khan</li><li>Muhammad Raheel</li><li>Muhammad Rashid Fakhrudin</li><li>Muhammad Rizwan</li><li>Muhammad Rizwan Khan</li><li>Muhammad Saeed Araeen</li><li>Muhammad Saeed Azhar</li><li>Muhammad Sajid Khan</li><li>Muhammad Saleem Quraishi</li><li>Muhammad Shoaib Adil</li><li>Muhammad Talha</li><li>Muhammad Tariq Chaudhary</li><li>Muhammad Tariq Hameed</li><li>Muhammad Usman</li><li>Muhammad Usman Ashraf</li><li>Muhammad Younus Dagha</li><li>Muhammad Yusaf</li><li>Muhammad Zahir Noor Ul Bashar</li><li>Muhammad Ziad</li><li>Muhammad Zubair Azam</li><li>Muhammad Zubair Khan</li><li>Muhammad Zubair Safdar</li><li>Mujahid Barelvi</li><li>Mujahid Hussain</li><li>Mujahid Khan</li><li>Mujeeb Ur Rehman Shami</li><li>Mujtaba Butt</li><li>Muneer Ahmad</li><li>Muneer Ahmad Khalili</li><li>Muneer Ahmad Khan</li><li>Munir Ahmad Baloch</li><li>Munir Ahmed Munir</li><li>Munnu Bhai</li><li>Muntazir Ali</li><li>Muqtada Mansoor</li><li>Musa Raza Afandi</li><li>Musarrat Jabeen</li><li>Mushahid Hussain Syed</li><li>Mushtaq Ahmad</li><li>Mushtaq Sohail</li><li>Mustansar Hussain Tarar</li><li>Mutruba Sheikh</li><li>Muzaffar Ali</li><li>Muzamal Suharwardy</li><li>Nabeela Tabassum</li><li>Nadeem Chaudhry</li><li>Nadeem Mumtaz Qureshi</li><li>Nadeem Raza</li><li>Nadeem Shigri</li><li>Nadir Shah Adil</li><li>Naeem Abbasi</li><li>Naeem Khalid Lodhi</li><li>Naeem Tahir</li><li>Nafees Siddiqui</li><li>Najam Sethi</li><li>Najam Wali Khan</li><li>Najia Ashar</li><li>Najm ul Hassan Atta</li><li>Najma Alam</li><li>Nasar Allah Malik</li><li>Nasar Iqbal Azad</li><li>Naseem Ahmad Bajwa</li><li>Naseem Zehra</li><li>Nasim Anjum</li><li>Nasir Faraz</li><li>Nasir Mehmood Malik</li><li>Nasir Mehmood Mughal</li><li>Nasir Mehmood Shaikh</li><li>Nasir Rizwan Advocate</li><li>Nasir Udin Mehmood</li><li>Nasir Zaidi</li><li>Nauman Yawar</li><li>Naushaba Siddiquie</li><li>Naveed Hussain</li><li>Naveed Iqbal Ansari</li><li>Naveen Ali</li><li>Nawab Mumtaz Ali Bhoto</li><li>Nawaz Khan Mirani</li><li>Nawazish Ali</li><li>Nayyar Sarhadi</li><li>Nazeer Ahmad Ghazi</li><li>Nazia Jabeen</li><li>Nazia Mustafa</li><li>Nazir Ahmad Sindhu</li><li>Nazir Dhoki</li><li>Nazir Naji</li><li>Neelofar Khar</li><li>Neelofar Sulehri</li><li>Neer Nadeem</li><li>Nighat Farman</li><li>Nighat Laghari</li><li>Nisar Ahmad Nisar</li><li>Noam Chomsky</li><li>Noman Alam</li><li>Noor Ul Ain</li><li>Noshaba Ahsan</li><li>Nusrat Abbas Dassu</li><li>Nusrat Javed</li><li>Nusrat Mirza</li><li>Onaiz Humayun Sheikh</li><li>Orya Maqbool Jan</li><li>Pakeeza Muneer</li><li>Pir Mukhtar Ahmad</li><li>Prof. Afraz Ahmad</li><li>Prof. Dr. Muhammad Yaseen</li><li>Prof. Dr. Munawwar Sabir</li><li>Prof. Jmail Choudhary</li><li>Prof. Khawaja Qutubuddin</li><li>Prof. Khursheed Ahmad</li><li>Prof. Mazhar</li><li>Prof. Naeem Qasam</li><li>Prof. Riffat Mazhar</li><li>Prof. Seema Seraj</li><li>Prof. Shamim Akhtar</li><li>Prof. Shams U Zama</li><li>Prof. Shareef Ul Mujahid</li><li>Prof. Sheikh Abdul Rasheed</li><li>Prof. Syed Asraar Bukhari</li><li>Prof. Yaseen Sheikh</li><li>Professor Abdul Manan Khurram</li><li>Qadir Khan</li><li>Qaiser Shareef</li><li>Qamar Abbas Naqvi</li><li>Qasim Ali Khan</li><li>Qasim Taj</li><li>Qiswar Saeed Mirza</li><li>Qudsia Mumtaz</li><li>Qudsia Nadeem</li><li>Raees Fatima</li><li>Rafi Ul Zaman Zubairi</li><li>Rafi Ullah Mian</li><li>Rafiq Patel</li><li>Raheel Azhar</li><li>Rahimullah Yusufzai</li><li>Raja Anwar</li><li>Raja Muhammad Ali</li><li>Ramsha Aftab</li><li>Rana Hamza Hussain</li><li>Rana Mehboob Akhter</li><li>Rana Tanveer Hussain</li><li>Rao Khalid</li><li>Rao Manzar Hayat</li><li>Rao Saif U Zaman</li><li>Rao Shabir Bilo Khan</li><li>Raoof Tahir</li><li>Rasheed Udin</li><li>Rasul Bakhsh Rais</li><li>Rauf Klasra</li><li>Ray Riaz Hussain</li><li>Raza Ali Abdi</li><li>Reham Khan</li><li>Rehana Anwar Sidique</li><li>Rehmat Ali Razi</li><li>Riayatullah Farooqui</li><li>Riaz Ahmad</li><li>Riaz Ahmad Syed</li><li>Riaz Chaudhary</li><li>Rizwan Abdur Rehman Abdullah</li><li>Rizwan Asif</li><li>Rizwan Tahir Munir</li><li>Robert Fisk</li><li>Roha Salam</li><li>Rohail Baig</li><li>Rokhan Yousafzai</li><li>Romaisa Hussain</li><li>Rooba Arooj</li><li>Ruqaya Iqbal</li><li>S.M. Zafar</li><li>S.M.A. Kazmi</li><li>S.Nayyar</li><li>Saad Baig</li><li>Saad Rasool</li><li>Saad Ullah Jan Barq</li><li>Saad Ullah Shah</li><li>Sabiha Dastgir</li><li>Sabir Karbalai</li><li>Sabir Muhammad Hassani</li><li>Sabir Shakir</li><li>Sabookh Syed</li><li>Sabtain Haider</li><li>Sadia Qureshi</li><li>Saeed Khawar</li><li>Saeed Pervaz</li><li>Safdar Ali Haidri</li><li>Safdar Ali Khan</li><li>Safoora Khairi</li><li>Sagheer Ali Saddique</li><li>Sajid Ali Sajid</li><li>Sajid Shad</li><li>Sajjad Hussain Jaleb</li><li>Sajjad Jahania</li><li>Sajjad Mir</li><li>Saleem Safi</li><li>Saleem Saithi</li><li>Saleem Yazdani</li><li>Salma Awan</li><li>Salma Latif</li><li>Salman Abid</li><li>Salman Aslam</li><li>Salman Nisar Shiekh</li><li>Salman Rasool</li><li>Sami Ullah</li><li>Sami Ullah Malik</li><li>Samiha Raheel Qazi</li><li>Samson Simon Sharaf</li><li>Sana Ghouri</li><li>Sana Hashmi</li><li>Saqlain Shoukat</li><li>Sara Liaqat</li><li>Sardar Attique Ahmed Khan</li><li>Sardar Bahadur Ahmad Khan</li><li>Sardar Shokuat Iqbal</li><li>Sarfraz Hussain</li><li>Sarfraz Muhammad Saddique</li><li>Sarmad Ayub</li><li>Sarwar Munir Rao</li><li>Sarwat Jamal Asmai</li><li>Sarwat Valim</li><li>Saud Usmani</li><li>Saulat Raza</li><li>Sayeeda Warsi</li><li>Schehryar Ahmed</li><li>Seema Mustafa</li><li>Seema Siraj</li><li>Shabana Yousaf</li><li>Shabbir Ali Babar</li><li>Shabbir Arman</li><li>Shabbir Ghauri</li><li>Shabnam Gull</li><li>Shaeran Rufus</li><li>Shafiq Khokhar</li><li>Shafqat Mehmood</li><li>Shagufta Farhat</li><li>Shaheen Rehman</li><li>Shaheen Sehbai</li><li>Shahid Hameed</li><li>Shahid Hassan</li><li>Shahid Jatoi</li><li>Shahid Khaqan Abbasi</li><li>Shahid Siddiqui</li><li>Shahida Butt</li><li>Shahzaib Nawaz</li><li>Shaikh Jaber</li><li>Shakeel Farooqi</li><li>Shakeel Siddiqui</li><li>Shakeel Waheed Ullah Khan</li><li>Shakeela Fatima</li><li>Shakil Ahmad Turrabi</li><li>Shakir Hussain Shakir</li><li>Shamim Tariq</li><li>Shamshad Ahmad</li><li>Shamshad Ali Khan</li><li>Shan Khan</li><li>Shanza Sharafat</li><li>Shaoor Hussain</li><li>Shareef Ul Syeed Ali</li><li>Sharrar Gee</li><li>Shayan Tamseel</li><li>Shazia Chheena</li><li>Shazia Zeeshan</li><li>Shehbaz Anwar Khan</li><li>Shehla Hassan</li><li>Shehla Ijaz</li><li>Shehriyar Khan</li><li>Shehryar Afridi</li><li>Sher Muhammad Chishti</li><li>Shereen Haider</li><li>Shezi Toseef</li><li>Shoaib Wajid</li><li>Shokat Javed</li><li>Showkat Budnumbal Kashmiri</li><li>Shuja Nawaz</li><li>Shujaat Khan Ahamadani</li><li>Shujat Ali</li><li>Siddiq Al Farooq</li><li>Siddique Azhar</li><li>Sikandar Hameed Lodhi</li><li>Siraj Ul Haq</li><li>Sobia Imran</li><li>Sobia Khan Niazi</li><li>Sofia Baidar</li><li>Sofiya Naveed</li><li>Sohaib Marghub</li><li>Sohail Ahmad</li><li>Sohail Ahmad Azmi</li><li>Sohail Ahmed Qaisar</li><li>Sohail Butt</li><li>Sohail Danish</li><li>Sohail Iqbal Bhatti</li><li>Sohail Warraich</li><li>Sohrab Ali</li><li>Suhail Sangi</li><li>Sultan Imran</li><li>Sumaira Malik</li><li>Summan Tariq</li><li>Syed Absar Bukhari</li><li>Syed Afaq Bukhari</li><li>Syed Ahtesham Zamir</li><li>Syed Akhtar Hussain Naqvi</li><li>Syed Alamdar Haider</li><li>Syed Ali Haroon</li><li>Syed Ali Zamin Naqvi</li><li>Syed Anwar Qudwai</li><li>Syed Arif Nonari</li><li>Syed Asadullah</li><li>Syed Azhar Hussnain Abdi</li><li>Syed Babar Ali</li><li>Syed Haris Kazmi</li><li>Syed Hasam Ahmad</li><li>Syed Hasnain Rizvi</li><li>Syed Jawad Hussain Rizvi</li><li>Syed Kaswar Gardezi</li><li>Syed Khyber Ali</li><li>Syed Mehmood Shah Sherazi</li><li>Syed Mohsin Kazmi</li><li>Syed Muazam Hai</li><li>Syed Muhammad Habib Irfani</li><li>Syed Munawar Hassan</li><li>Syed Musharraf Shah</li><li>Syed Nauman</li><li>Syed Noor Azhar Jaffri</li><li>Syed Qamber Ali Rizvi</li><li>Syed Qasim Ali Shah</li><li>Syed Shah Muhammad Hamza</li><li>Syed Shariq Waqar</li><li>Syed Shehanshah Hussain Naqvi</li><li>Syed Shuja Haider</li><li>Syed Tanzeel Ashfaq</li><li>Syed Wali Shah Afridi</li><li>Syed Waqas Anjum Jaffery</li><li>Syed Yusaf Raza Gilani</li><li>Syed Zeeshan Haider</li><li>Syeda Alisha</li><li>Syeda Maleeha Jalali</li><li>Syeda Muntaha Musharraf</li><li>Syeda Najam Zahra Rizvi</li><li>Tabinda Khan</li><li>Tahir Ahmed Farooqi</li><li>Tahir Mehmood Ashrafi</li><li>Tahir Najmi</li><li>Tahir Sarwar Mir</li><li>Taj Haider</li><li>Talat Hussain</li><li>Talat Masood</li><li>Talat Shabbir</li><li>Tania Habib</li><li>Tanveer Ahmed Chandio</li><li>Tanveer Qaisar Shahid</li><li>Tariq Butt</li><li>Tariq Habib</li><li>Tariq Ismail Sagar</li><li>Tariq Kamran</li><li>Tariq Khursheed Malik</li><li>Tariq Mateen</li><li>Tariq Mehmood Chaudhary</li><li>Tariq Mehmood Mian</li><li>Tasneem Peer Zada</li><li>Taufeeq Butt</li><li>Tausif Ahmad Khan</li><li>Tayeba Zia</li><li>Tehmina Mukhtar</li><li>Temoor Khan</li><li>Tishna Barelvi</li><li>Tuba Tariq</li><li>Umar Farooq</li><li>Umer Qazi</li><li>Unaiza Siddiqui</li><li>Usama Shabir</li><li>Usman Damohi</li><li>Usman Hassan Zai</li><li>Wajahat Ali Abbasi</li><li>Wajahat Masood</li><li>Wajahat Saeed Khan</li><li>Wajid Bhatti</li><li>Waleed Babar</li><li>Wania Shahid</li><li>Waqar Ahmad Khan</li><li>Waqar Khan</li><li>Waqeel Anjum</li><li>Waseem Ahmed Khan</li><li>Waseh Jalil</li><li>Wasi Shah</li><li>Wasif Nagi</li><li>Wisal Ahmad</li><li>Wusat Ullah Khan</li><li>Yasir Pirzada</li><li>Yasmin Rashid</li><li>Younus Hamdam</li><li>Yousaf Abbasi</li><li>Yousaf Hussain Sherazi</li><li>Yousuf Siraj</li><li>Zaara Mazhar</li><li>Zafar Agha</li><li>Zafar Hassan</li><li>Zafar Hilaly</li><li>Zafar Iqbal</li><li>Zafar Mahmood</li><li>Zafar Muhayyudin</li><li>Zafar Rame</li><li>Zafar Ul Haq Meman</li><li>Zahid Ali Khan</li><li>Zahid Awan</li><li>Zahid Mubashir</li><li>Zahida Hina</li><li>Zahida Javed</li><li>Zahir Akhter Bedi</li><li>Zahoor Dhareja</li><li>Zaiba Naureen</li><li>Zaid Malik</li><li>Zain Ulabidin</li><li>Zalme Khalil Zad</li><li>Zameer Balouch</li><li>Zamurd Naqvi</li><li>Zeeshan Hashim</li><li>Zeeshan Noor Khilji</li><li>Zeeshan Shah</li><li>Zia Shahid</li><li>Zohaib Hassan</li><li>Zoya Qadri</li><li>Zubair Rehman</li><li>Zulfiqar Ahmed Cheema</li><li>Zulfiqar Chaudhry</li><li>Zulkarneen Zaidi</li>
-        </ul>
-    </div>
-      <div class="screen" id="saved">
-        Saved
       </div>
+    </div>
+    <div class="screen" id="authors">
+      <div class="search-box" style="display: none;">
+        <input type="text" placeholder="Search Authors" id="authorSearch">
+      </div>
+      <div class="author-list">
+        <ul class="author-grid">
+          <li>Aaghar Nadeem Sahar</li>
+          <li>Aamer Hayat Bhandara</li>
+          <li>Aamir Zahoor</li>
+          <li>Aasim Irshad</li>
+          <li>Abbas Mehkari</li>
+          <li>Abdul Basit</li>
+          <li>Abdul Ghafar Qaiserani</li>
+          <li>Abdul Ghaffar Aziz</li>
+          <li>Abdul Hameed</li>
+          <li>Abdul Qadir Hassan</li>
+          <li>Abdul Rafeh Rasool</li>
+          <li>Abdul Raoof</li>
+          <li>Abdullah Babar Awan</li>
+          <li>Abdullah Butt</li>
+          <li>Abdullah Tariq Sohail</li>
+          <li>Abdurehman Khan</li>
+          <li>Abeer Annas</li>
+          <li>Abid Ali</li>
+          <li>Abid Hashmi</li>
+          <li>Abid Mehmood Azaam</li>
+          <li>Abid Mir</li>
+          <li>Abid Tahami</li>
+          <li>Abu Nasar</li>
+          <li>Adnan Adil</li>
+          <li>Adnan Adil Zaidi</li>
+          <li>Adnan Ashraf</li>
+          <li>Adnan Randhawa</li>
+          <li>Afaq Maqsood Bhullah</li>
+          <li>Aftab Ahmad</li>
+          <li>Aftab Ahmad Khanzada</li>
+          <li>Aftab Iqbal</li>
+          <li>Afzaal Rehan</li>
+          <li>Afzal Rehmaan</li>
+          <li>Afzal Ur Rehman</li>
+          <li>Agha Masood Hussain</li>
+          <li>Agha Masood Shorish</li>
+          <li>Agha Mehmood ul Hassan Lodhi</li>
+          <li>Agha Shoaib Abbas</li>
+          <li>Ahfaz Ur Rahman</li>
+          <li>Ahmad Ijaz</li>
+          <li>Ahmad Khan</li>
+          <li>Ahmad Rasheed</li>
+          <li>Ahmad Sarfraz</li>
+          <li>Ahsan Iqbal</li>
+          <li>Ahsan Ur Rehman</li>
+          <li>Ahtesham Ul Haq</li>
+          <li>Ahtisham Musa</li>
+          <li>Aima Mehmood</li>
+          <li>Aimen Tanveer</li>
+          <li>Aini Niazi</li>
+          <li>Aisha Arshad</li>
+          <li>Ajmal Jami</li>
+          <li>Ajmal Khatak Kashar</li>
+          <li>Ajmal Shams</li>
+          <li>Ajwa Rasheed</li>
+          <li>Akhtar Bukhari</li>
+          <li>Akhtar Hussain</li>
+          <li>Akmal Aleemi</li>
+          <li>Ali Ahmad Dhillon</li>
+          <li>Ali Akbar Natiq</li>
+          <li>Ali Asghar</li>
+          <li>Ali Furqan Kayani</li>
+          <li>Ali Moeen Nawazish</li>
+          <li>Ali Raza Ahmad</li>
+          <li>Ali Raza Alvi</li>
+          <li>Ali Shan Mughal</li>
+          <li>Ali Sultan</li>
+          <li>Allama Ibtisam Ilahi Zaheer</li>
+          <li>Allama Muhammad Ilyas Attar Qadri</li>
+          <li>Allama Muhammad Raghib Hussain Naeemi</li>
+          <li>Allama Muhammad Shahid Madni</li>
+          <li>Altaf Ahmad</li>
+          <li>Altaf Hassan Qureshi</li>
+          <li>Altaf Hussain</li>
+          <li>Amar Jaleel</li>
+          <li>Amber Zaidi</li>
+          <li>Ameer Hamza</li>
+          <li>Ameer Hamza Sanglavi</li>
+          <li>Amir Jameel</li>
+          <li>Amir Khakwani</li>
+          <li>Amira Ehsan</li>
+          <li>Amirjan Haqqani</li>
+          <li>Amjad Bukhari</li>
+          <li>Amjad Islam Amjad</li>
+          <li>Ammar Chaudhry</li>
+          <li>Ammar Masood</li>
+          <li>Amna Ahmad</li>
+          <li>Amna Liaqat Chaudhry</li>
+          <li>Andleeb Abbas</li>
+          <li>Aneeq Ali</li>
+          <li>Anees Baqar</li>
+          <li>Anees Haroon</li>
+          <li>Anees Mansori</li>
+          <li>Anjum Farooq</li>
+          <li>Anjum Niaz</li>
+          <li>Ansar Abbasi</li>
+          <li>Anwar Farhad</li>
+          <li>Anwar Ghazi</li>
+          <li>Anwar Hussain Haqqi</li>
+          <li>Aqeel Abbas</li>
+          <li>Aqeel Ahmad Anjum Awan</li>
+          <li>Arbaz Raza Bhutta</li>
+          <li>Arham Junaid</li>
+          <li>Arif Anis Malik</li>
+          <li>Arif Hashmi</li>
+          <li>Arif Nizami</li>
+          <li>Arif Uzaman</li>
+          <li>Arshad Jelani</li>
+          <li>Arshad Mehmood</li>
+          <li>Arshad Waheed Choudhary</li>
+          <li>Arshan Zafar</li>
+          <li>Arslan Khalid</li>
+          <li>Arslan Sarwar</li>
+          <li>Arundhati Roy</li>
+          <li>Asaad Abdul Rehman</li>
+          <li>Asad Ahmad</li>
+          <li>Asad Mufti</li>
+          <li>Asad Tahir Jappa</li>
+          <li>Asad Ullah Khan</li>
+          <li>Asadullah Ghalib</li>
+          <li>Asar Chauhan</li>
+          <li>Asghar Abdullah</li>
+          <li>Asghar Shamall</li>
+          <li>Asghar Sial</li>
+          <li>Ashar Najmi</li>
+          <li>Ashfaq Ullah Jan Dagai</li>
+          <li>Ashraf Sharif</li>
+          <li>Asif Afan</li>
+          <li>Asif Butt</li>
+          <li>Asif Mehmood</li>
+          <li>Asif Sohail Muzaffar</li>
+          <li>Asif Zaidi</li>
+          <li>Asim Khan</li>
+          <li>Asim Khawaja</li>
+          <li>Aslam Awan</li>
+          <li>Aslam Gordaspuri</li>
+          <li>Aslam Khan</li>
+          <li>Aslam Khan Khichi</li>
+          <li>Aslam Khokhar</li>
+          <li>Asma Imran</li>
+          <li>Asma Tariq</li>
+          <li>Asmatgul Khattak</li>
+          <li>Ata Ul Haq Qasmi</li>
+          <li>Athar Qadir Hassan</li>
+          <li>Atif Iqbal Advocate</li>
+          <li>Atta Ur Rehman</li>
+          <li>Awais Hafiz</li>
+          <li>Awais Qayyum Rana</li>
+          <li>Awais Ur Rehman</li>
+          <li>Ayaz Amir</li>
+          <li>Ayaz Khan</li>
+          <li>Ayaz Rana</li>
+          <li>Aysha Jamal</li>
+          <li>Azeem M Mian</li>
+          <li>Azeem Sarwar</li>
+          <li>Azhar Khayal</li>
+          <li>Azhar Shah</li>
+          <li>Azi Khawaja</li>
+          <li>Aziz Zahira Malik</li>
+          <li>Babar Ayaz</li>
+          <li>Babar Sattar</li>
+          <li>Barkha Dutt</li>
+          <li>Barrister Aitzaz Ahsan</li>
+          <li>Barrister Ali Zafar</li>
+          <li>Barrister Amir Hassan</li>
+          <li>Barrister Hameed Bashani</li>
+          <li>Basham Bachani</li>
+          <li>Bashir Riaz</li>
+          <li>Bharat Boshan</li>
+          <li>Bilal Saleem</li>
+          <li>Bilal Ur Rasheed</li>
+          <li>Bilawal Bhutto Zardari</li>
+          <li>Bill Gates</li>
+          <li>Bint e Aslam</li>
+          <li>Brigadier Arshad Malik</li>
+          <li>Brigadier Faisal Masud</li>
+          <li>Brigadior Mazhar Abbas</li>
+          <li>Bushra Hassan</li>
+          <li>Bushra Ijaz</li>
+          <li>Chaudhary Fawad Hussain</li>
+          <li>Chaudhary Wasim Tariq</li>
+          <li>Choudhri Muhammad Latif</li>
+          <li>Danish Younus</li>
+          <li>Dastageer Bhatti</li>
+          <li>Dekan Walish</li>
+          <li>Dr. Aamir Liaquat Hussain</li>
+          <li>Dr. Abdul Qadeer Khan</li>
+          <li>Dr. Afaan Qaiser</li>
+          <li>Dr. Ahmad Saleem</li>
+          <li>Dr. Ajmal Niazi</li>
+          <li>Dr. Akhtar Shumar</li>
+          <li>Dr. Amjad Saqib</li>
+          <li>Dr. Anwar Sadeed</li>
+          <li>Dr. Arif Alvi</li>
+          <li>Dr. Arshad Altaf</li>
+          <li>Dr. Ashfaq Ahmad Virk</li>
+          <li>Dr. Ashfaq Hassan Khan</li>
+          <li>Dr. Atta Ur Rahman</li>
+          <li>Dr. Ayesha Siddiqa</li>
+          <li>Dr. Babar Awan</li>
+          <li>Dr. Bharat</li>
+          <li>Dr. Fareed Ahmad</li>
+          <li>Dr. Fareed Ahmad Paracha</li>
+          <li>Dr. Farrukh Saleem</li>
+          <li>Dr. Furqan Hameed</li>
+          <li>Dr. Hasan Askari Rizvi</li>
+          <li>Dr. Hussain Ahmed Paracha</li>
+          <li>Dr. Hussain Muhaye Udin</li>
+          <li>Dr. Ibrahim Mughal</li>
+          <li>Dr. Iftikhar Hussain Bukhari</li>
+          <li>Dr. Ikram Ul Haq</li>
+          <li>Dr. Imrana Mushtaq</li>
+          <li>Dr. Javed Laghari</li>
+          <li>Dr. Khalid Javed Jaan</li>
+          <li>Dr. Lal Khan</li>
+          <li>Dr. Majeed Khan</li>
+          <li>Dr. Maleeha Lodhi</li>
+          <li>Dr. Mansoor Noorani</li>
+          <li>Dr. Manzoor Ijaz</li>
+          <li>Dr. Mirza Ikhtiar Baig</li>
+          <li>Dr. Mubarak Ali</li>
+          <li>Dr. Mughees Uddin Sheikh</li>
+          <li>Dr. Muhammad Tayyab Khan Singhanvi</li>
+          <li>Dr. Muhammad Yasin</li>
+          <li>Dr. Mujahid Mansoori</li>
+          <li>Dr. Munawar Sabir</li>
+          <li>Dr. Nabeel Chaudhry</li>
+          <li>Dr. Nadeem Gilani</li>
+          <li>Dr. Nasir Mustehsin</li>
+          <li>Dr. Rabia Khurram</li>
+          <li>Dr. Rafi Udin Hashmi</li>
+          <li>Dr. Rasheed Ahmad Khan</li>
+          <li>Dr. Rashid Bin Masood</li>
+          <li>Dr. Sabir Badar Jaffri</li>
+          <li>Dr. Sadaf Akbar</li>
+          <li>Dr. Safdar Mahmood</li>
+          <li>Dr. Sajjad</li>
+          <li>Dr. Shahid Hassan Siddiqui</li>
+          <li>Dr. Shahida Dilawar Shah</li>
+          <li>Dr. Shehla Kazmi</li>
+          <li>Dr. Sughra Sadaf</li>
+          <li>Dr. Tahir Ashraf</li>
+          <li>Dr. Tahir Masood</li>
+          <li>Dr. Tahir Raza Bukhari</li>
+          <li>Dr. Tahir Ul Qadri</li>
+          <li>Dr. Talat Shabbir</li>
+          <li>Dr. Talib Sial</li>
+          <li>Dr. Tariq Rustam</li>
+          <li>Dr. Tehzeeb Fatima</li>
+          <li>Dr. Ved Pratap Vaidik</li>
+          <li>Dr. Waqar Yousuf Azeemi</li>
+          <li>Dr. Younas Hasni</li>
+          <li>Dr. Zahid Munir Amir</li>
+          <li>Durdana Najam</li>
+          <li>Ejaz Hafeez Khan</li>
+          <li>Engineer Khurram Dastgir Khan</li>
+          <li>Esaar Rana</li>
+          <li>Esha Qaisar</li>
+          <li>Faheem Khan</li>
+          <li>Faisal Farooque</li>
+          <li>Faisal Mehran</li>
+          <li>Faislan Shafa Isfahani</li>
+          <li>Faiza Meer</li>
+          <li>Fakhra Olakh Advocate</li>
+          <li>Farah Naz</li>
+          <li>Farah Nazz Asfahani</li>
+          <li>Farah Sadia</li>
+          <li>Fareeha Mubarak</li>
+          <li>Fareena Almas</li>
+          <li>Farhat Tahir Shah</li>
+          <li>Farheen Sheikh</li>
+          <li>Farogh Marghoob Sidique</li>
+          <li>Farooq A Haris</li>
+          <li>Farooq Adil</li>
+          <li>Farooq Bahaul Haq</li>
+          <li>Farooq Chohan</li>
+          <li>Farooq Faisal Khan</li>
+          <li>Farooq Haroon</li>
+          <li>Farooq Nadeem</li>
+          <li>Farooq Qaiser</li>
+          <li>Farooq Tariq</li>
+          <li>Farrukh Khan Patafi</li>
+          <li>Farrukh Sohail Goendi</li>
+          <li>Farzana Khursheed</li>
+          <li>Fatima Ahtisham</li>
+          <li>Fatima Bhutto</li>
+          <li>Fatima Mustafa</li>
+          <li>Fatima Naqvi</li>
+          <li>Fayaz Ul Hassan Chohan</li>
+          <li>Fazal Rabi Rahi</li>
+          <li>Fida Khatak</li>
+          <li>Fida Muhammad Adeel</li>
+          <li>Fiza Basham</li>
+          <li>Fozia Mughal</li>
+          <li>Furqan Qureshi</li>
+          <li>G.N Mughal</li>
+          <li>Ghazala Aziz</li>
+          <li>Ghazali Farooq</li>
+          <li>Ghazanfar Hashmi</li>
+          <li>Ghazi Salah Udin</li>
+          <li>Ghulaam Murtaza</li>
+          <li>Ghulam Muhayyu Din</li>
+          <li>Gul e Nokhaiz Akhtar</li>
+          <li>Gulfam Ali</li>
+          <li>Gull Farkhanda</li>
+          <li>Habib Akram</li>
+          <li>Habib ur Rehman</li>
+          <li>Hafeez Ullah Niazi</li>
+          <li>Hafiz Ameer Hamza</li>
+          <li>Hafiz Muhammad Faisal Khalid</li>
+          <li>Hafiz Muhammad Idrees</li>
+          <li>Hafiz Muhammad Saeed</li>
+          <li>Hafiz Sanaullah</li>
+          <li>Hafiz Shafiq Ur Rehman</li>
+          <li>Hafiz Syed Riaz Hussain Najfi</li>
+          <li>Hafiz Zohaib Tayyab</li>
+          <li>Haider Abbas Gardaizi</li>
+          <li>Haider Javed Syed</li>
+          <li>Haji Ghulam Raza</li>
+          <li>Hakeem Ahmad Hussain</li>
+          <li>Hakim Tariq Chugtai</li>
+          <li>Hakim Zeeshan</li>
+          <li>Hameed Ahmad Sethi</li>
+          <li>Hamid Mir</li>
+          <li>Hammad Hassan</li>
+          <li>Hamraaz Ahsan</li>
+          <li>Hamza Bhatti</li>
+          <li>Hamza Khalil</li>
+          <li>Hania Irmiya</li>
+          <li>Haris Akhtar Raja</li>
+          <li>Haris Masood</li>
+          <li>Haroon Ur Rasheed</li>
+          <li>Hashir Irshad</li>
+          <li>Hashmat Ullah Siddique</li>
+          <li>Hasnain Haider</li>
+          <li>Hasnain Jamil</li>
+          <li>Hassan Hafeez</li>
+          <li>Hassan Iqbal</li>
+          <li>Hassan Jaffer</li>
+          <li>Hassan Mujtaba</li>
+          <li>Hassan Nisar</li>
+          <li>Hassan Rizvi Advocate</li>
+          <li>Hassan Sarwar</li>
+          <li>Humayun Shahid</li>
+          <li>Husnain Jamal</li>
+          <li>Hussam Hur</li>
+          <li>Huzaifa Rehman Qureshi</li>
+          <li>Huzaifa Sinan</li>
+          <li>I.H. Syed</li>
+          <li>Ibn e Fazil</li>
+          <li>Ibrahim Azmi</li>
+          <li>Ibrahim Raja</li>
+          <li>Idrees Bakhtiar</li>
+          <li>Ifra Sajid</li>
+          <li>Iftekhar Gillani</li>
+          <li>Iftikhar Ahmad</li>
+          <li>Ijaz Ahmad</li>
+          <li>Ijaz Ul Haq</li>
+          <li>Ijaz Zaka Syed</li>
+          <li>Ikram Sehgal</li>
+          <li>Ilyas Shakir</li>
+          <li>Immad Abbasi</li>
+          <li>Imran Amin</li>
+          <li>Imran Hussain Choudhary</li>
+          <li>Imran Khan</li>
+          <li>Imran Shahid Bhandar</li>
+          <li>Imran Yaqoob Khan</li>
+          <li>Imtiaaz Alam</li>
+          <li>Imtiaz Gul</li>
+          <li>Intekhab Aslam Khan</li>
+          <li>Intizar Hussain</li>
+          <li>Iqbal Khan Manj</li>
+          <li>Iqbal Khursheed</li>
+          <li>Iqbal Shahid</li>
+          <li>Iqbal Yousaf</li>
+          <li>Iqra Maqbool</li>
+          <li>Iqra Sajjad</li>
+          <li>Iqtidar Javed</li>
+          <li>Irfan Ali</li>
+          <li>Irfan Hussain</li>
+          <li>Irfan Siddiqui</li>
+          <li>Irshad Ahmad Arif</li>
+          <li>Irshad Bhatti</li>
+          <li>Irshad Mehmood</li>
+          <li>Ishtiaq Baig</li>
+          <li>Ismat Gull Khatak</li>
+          <li>Jabbar Jaffer</li>
+          <li>Jabbar Mirza</li>
+          <li>Jabbar Qureshi</li>
+          <li>Jaffer Khan Tareen</li>
+          <li>Jahangir Badar</li>
+          <li>Jahid Ahmad</li>
+          <li>Jameel Ahmad Adeel</li>
+          <li>Jameel Udin Aali</li>
+          <li>Jamil Marghuz</li>
+          <li>Javed Ahmad Ghamidi</li>
+          <li>Javed Chaudhry</li>
+          <li>Javed Hafeez</li>
+          <li>Javed Hashmi</li>
+          <li>Javed Jabar</li>
+          <li>Javed Kahlon</li>
+          <li>Javed Malik</li>
+          <li>Javed Qazi</li>
+          <li>Javed Saba</li>
+          <li>Javed Siddiq</li>
+          <li>Javeria Siddique</li>
+          <li>Jawad Ahmad</li>
+          <li>Jawad Nazir</li>
+          <li>Jhangir Shah Kakar</li>
+          <li>Junaid S. Abbas</li>
+          <li>Justice Hazikul Khairi</li>
+          <li>Justice Javed Iqbal</li>
+          <li>Justice Rai Mando</li>
+          <li>Kaleem Zubair</li>
+          <li>Kamran Goraya</li>
+          <li>Kamran Malik</li>
+          <li>Kamran Shahid</li>
+          <li>Kamran Tufail</li>
+          <li>Kanwar Muhammad Dilshad</li>
+          <li>Kashan Yaqoob</li>
+          <li>Kashif Bashir Khan</li>
+          <li>Khalid Baloch</li>
+          <li>Khalid Goraya</li>
+          <li>Khalid H Lodhi</li>
+          <li>Khalid Masood Khan</li>
+          <li>Khalid Mehmood</li>
+          <li>Khalid Mehmood Rasool</li>
+          <li>Khalid Rasheed</li>
+          <li>Khalid Sheikh</li>
+          <li>Khalid Zahid</li>
+          <li>Khalil Ahmad Naini Taal Wala</li>
+          <li>Khan Iftekhar Muhammad</li>
+          <li>Khawaja Amaan Azeez</li>
+          <li>Khawaja Izhar Ul Hassan</li>
+          <li>Khawaja Jameel Ahmad</li>
+          <li>Khawar Naeem Hashmi</li>
+          <li>Khizar Klasra</li>
+          <li>Khurram Ali Rao</li>
+          <li>Khurram Sameer</li>
+          <li>Khurram Sohail</li>
+          <li>Khursheed Nadeem</li>
+          <li>Khwaja Naveed Ahmad</li>
+          <li>Khwaja Saad Rafique</li>
+          <li>Kishwar Naheed</li>
+          <li>Kishwar Zahra</li>
+          <li>Kuldip Nayar</li>
+          <li>Latif Choudhry</li>
+          <li>Leena Hashir</li>
+          <li>Liaqat Baloach</li>
+          <li>Liaqat Rajpar</li>
+          <li>Lubna Jamshed</li>
+          <li>Lubna Safdar</li>
+          <li>Lubna Zaheer</li>
+          <li>Luqman Sharif</li>
+          <li>M Ibrahim Khan</li>
+          <li>M Wadood Sajid</li>
+          <li>M. Aslam</li>
+          <li>M.B Anjum</li>
+          <li>M.I Khalil</li>
+          <li>M.J Gohar</li>
+          <li>M.R Malik</li>
+          <li>Maaz Bin Mahmood</li>
+          <li>Madiha Parveen</li>
+          <li>Mah Naz Rehman</li>
+          <li>Maham Maqsood</li>
+          <li>Maheen Khan</li>
+          <li>Mahmood Shaam</li>
+          <li>Mahnoor Rizwan</li>
+          <li>Majeed Asghar</li>
+          <li>Majeed Rehmani</li>
+          <li>Majid Sadiq Nizami</li>
+          <li>Makhdoom Athar</li>
+          <li>Maleeha Hashmi</li>
+          <li>Malik Altaf Hussain</li>
+          <li>Malik Anwar Hussain Burhan</li>
+          <li>Malik Tahir Javed</li>
+          <li>Manjari Chatterjee Miller</li>
+          <li>Mansoor Afaq</li>
+          <li>Mansoor Ahmad</li>
+          <li>Mansoor Khalid</li>
+          <li>Manzoor Mallah</li>
+          <li>Manzoor Razi</li>
+          <li>Marosha Muzafar</li>
+          <li>Marvi Memon</li>
+          <li>Maryam Arshad</li>
+          <li>Masood Ashar</li>
+          <li>Masood Malik</li>
+          <li>Mazhar Barlas</li>
+          <li>Mazhar Choudhry</li>
+          <li>Mazhar Joiya</li>
+          <li>Mazhar Khokhar</li>
+          <li>Mazhar Minhas</li>
+          <li>Mehdi Ali</li>
+          <li>Meher Bukhari</li>
+          <li>Mehmood Alam Khalid</li>
+          <li>Mehmood Jan Babar</li>
+          <li>Mehmood Mirza</li>
+          <li>Mehnaz Rafi</li>
+          <li>Mian Amir Mehmood</li>
+          <li>Mian Imran Ahmad</li>
+          <li>Mian Muhammad Ashraf Asmi Advocate</li>
+          <li>Mian Muhammad Shehbaz Sharif</li>
+          <li>Mian Tariq Misbah</li>
+          <li>Mohammad Farhad Nadeem</li>
+          <li>Mohsin Goraya</li>
+          <li>Mohtarma Asma Jahangir</li>
+          <li>Molana Mufti Muhammad Rafi Usmani</li>
+          <li>Molana Tanvir ul Haq Thanvi</li>
+          <li>Mona Khan</li>
+          <li>Muaz Bin Izhar</li>
+          <li>Mubarak Haider</li>
+          <li>Mubashir Ali Zaidi</li>
+          <li>Mubeen Rasheed</li>
+          <li>Mudassar Aslam</li>
+          <li>Mudassir Iqbal Butt</li>
+          <li>Mufti Muneeb Ur Rehman</li>
+          <li>Muhammad Abdul Hameed</li>
+          <li>Muhammad Abdullah Butt</li>
+          <li>Muhammad Abdullah Gul</li>
+          <li>Muhammad Ahmad Sabzwari</li>
+          <li>Muhammad Altaf</li>
+          <li>Muhammad Altaf Qamar</li>
+          <li>Muhammad Amanat Rasool</li>
+          <li>Muhammad Amir Rana</li>
+          <li>Muhammad Anwar Gray Wall</li>
+          <li>Muhammad Arif Shah</li>
+          <li>Muhammad Arshad</li>
+          <li>Muhammad Arslan</li>
+          <li>Muhammad Asad Shah</li>
+          <li>Muhammad Asad Waqas</li>
+          <li>Muhammad Aslam Ghuman</li>
+          <li>Muhammad Azam Khan Swati</li>
+          <li>Muhammad Babar Taimoor</li>
+          <li>Muhammad Bilal Ghauri</li>
+          <li>Muhammad Faisal Shehzad</li>
+          <li>Muhammad Farooq Chouhan</li>
+          <li>Muhammad Fayaz Udin</li>
+          <li>Muhammad Haider Amin</li>
+          <li>Muhammad Hamza Ali</li>
+          <li>Muhammad Haroon</li>
+          <li>Muhammad Hussain Hunarmal</li>
+          <li>Muhammad Ijaz Mian</li>
+          <li>Muhammad Iqbal Choudhary</li>
+          <li>Muhammad Irfan Chandio</li>
+          <li>Muhammad Irfan Nadeem</li>
+          <li>Muhammad Irfan Siddiqui</li>
+          <li>Muhammad Ishaq Dar</li>
+          <li>Muhammad Ishtiaq</li>
+          <li>Muhammad Izhar Ul Haq</li>
+          <li>Muhammad Junaid</li>
+          <li>Muhammad Kamran</li>
+          <li>Muhammad Kamran Khan</li>
+          <li>Muhammad Khan</li>
+          <li>Muhammad Mahdi</li>
+          <li>Muhammad Mansoor Khan</li>
+          <li>Muhammad Mazhar Rasheed</li>
+          <li>Muhammad Muneeb Ishfaq</li>
+          <li>Muhammad Naveed Aslam</li>
+          <li>Muhammad Qadir Khan</li>
+          <li>Muhammad Raheel</li>
+          <li>Muhammad Rashid Fakhrudin</li>
+          <li>Muhammad Rizwan</li>
+          <li>Muhammad Rizwan Khan</li>
+          <li>Muhammad Saeed Araeen</li>
+          <li>Muhammad Saeed Azhar</li>
+          <li>Muhammad Sajid Khan</li>
+          <li>Muhammad Saleem Quraishi</li>
+          <li>Muhammad Shoaib Adil</li>
+          <li>Muhammad Talha</li>
+          <li>Muhammad Tariq Chaudhary</li>
+          <li>Muhammad Tariq Hameed</li>
+          <li>Muhammad Usman</li>
+          <li>Muhammad Usman Ashraf</li>
+          <li>Muhammad Younus Dagha</li>
+          <li>Muhammad Yusaf</li>
+          <li>Muhammad Zahir Noor Ul Bashar</li>
+          <li>Muhammad Ziad</li>
+          <li>Muhammad Zubair Azam</li>
+          <li>Muhammad Zubair Khan</li>
+          <li>Muhammad Zubair Safdar</li>
+          <li>Mujahid Barelvi</li>
+          <li>Mujahid Hussain</li>
+          <li>Mujahid Khan</li>
+          <li>Mujeeb Ur Rehman Shami</li>
+          <li>Mujtaba Butt</li>
+          <li>Muneer Ahmad</li>
+          <li>Muneer Ahmad Khalili</li>
+          <li>Muneer Ahmad Khan</li>
+          <li>Munir Ahmad Baloch</li>
+          <li>Munir Ahmed Munir</li>
+          <li>Munnu Bhai</li>
+          <li>Muntazir Ali</li>
+          <li>Muqtada Mansoor</li>
+          <li>Musa Raza Afandi</li>
+          <li>Musarrat Jabeen</li>
+          <li>Mushahid Hussain Syed</li>
+          <li>Mushtaq Ahmad</li>
+          <li>Mushtaq Sohail</li>
+          <li>Mustansar Hussain Tarar</li>
+          <li>Mutruba Sheikh</li>
+          <li>Muzaffar Ali</li>
+          <li>Muzamal Suharwardy</li>
+          <li>Nabeela Tabassum</li>
+          <li>Nadeem Chaudhry</li>
+          <li>Nadeem Mumtaz Qureshi</li>
+          <li>Nadeem Raza</li>
+          <li>Nadeem Shigri</li>
+          <li>Nadir Shah Adil</li>
+          <li>Naeem Abbasi</li>
+          <li>Naeem Khalid Lodhi</li>
+          <li>Naeem Tahir</li>
+          <li>Nafees Siddiqui</li>
+          <li>Najam Sethi</li>
+          <li>Najam Wali Khan</li>
+          <li>Najia Ashar</li>
+          <li>Najm ul Hassan Atta</li>
+          <li>Najma Alam</li>
+          <li>Nasar Allah Malik</li>
+          <li>Nasar Iqbal Azad</li>
+          <li>Naseem Ahmad Bajwa</li>
+          <li>Naseem Zehra</li>
+          <li>Nasim Anjum</li>
+          <li>Nasir Faraz</li>
+          <li>Nasir Mehmood Malik</li>
+          <li>Nasir Mehmood Mughal</li>
+          <li>Nasir Mehmood Shaikh</li>
+          <li>Nasir Rizwan Advocate</li>
+          <li>Nasir Udin Mehmood</li>
+          <li>Nasir Zaidi</li>
+          <li>Nauman Yawar</li>
+          <li>Naushaba Siddiquie</li>
+          <li>Naveed Hussain</li>
+          <li>Naveed Iqbal Ansari</li>
+          <li>Naveen Ali</li>
+          <li>Nawab Mumtaz Ali Bhoto</li>
+          <li>Nawaz Khan Mirani</li>
+          <li>Nawazish Ali</li>
+          <li>Nayyar Sarhadi</li>
+          <li>Nazeer Ahmad Ghazi</li>
+          <li>Nazia Jabeen</li>
+          <li>Nazia Mustafa</li>
+          <li>Nazir Ahmad Sindhu</li>
+          <li>Nazir Dhoki</li>
+          <li>Nazir Naji</li>
+          <li>Neelofar Khar</li>
+          <li>Neelofar Sulehri</li>
+          <li>Neer Nadeem</li>
+          <li>Nighat Farman</li>
+          <li>Nighat Laghari</li>
+          <li>Nisar Ahmad Nisar</li>
+          <li>Noam Chomsky</li>
+          <li>Noman Alam</li>
+          <li>Noor Ul Ain</li>
+          <li>Noshaba Ahsan</li>
+          <li>Nusrat Abbas Dassu</li>
+          <li>Nusrat Javed</li>
+          <li>Nusrat Mirza</li>
+          <li>Onaiz Humayun Sheikh</li>
+          <li>Orya Maqbool Jan</li>
+          <li>Pakeeza Muneer</li>
+          <li>Pir Mukhtar Ahmad</li>
+          <li>Prof. Afraz Ahmad</li>
+          <li>Prof. Dr. Muhammad Yaseen</li>
+          <li>Prof. Dr. Munawwar Sabir</li>
+          <li>Prof. Jmail Choudhary</li>
+          <li>Prof. Khawaja Qutubuddin</li>
+          <li>Prof. Khursheed Ahmad</li>
+          <li>Prof. Mazhar</li>
+          <li>Prof. Naeem Qasam</li>
+          <li>Prof. Riffat Mazhar</li>
+          <li>Prof. Seema Seraj</li>
+          <li>Prof. Shamim Akhtar</li>
+          <li>Prof. Shams U Zama</li>
+          <li>Prof. Shareef Ul Mujahid</li>
+          <li>Prof. Sheikh Abdul Rasheed</li>
+          <li>Prof. Syed Asraar Bukhari</li>
+          <li>Prof. Yaseen Sheikh</li>
+          <li>Professor Abdul Manan Khurram</li>
+          <li>Qadir Khan</li>
+          <li>Qaiser Shareef</li>
+          <li>Qamar Abbas Naqvi</li>
+          <li>Qasim Ali Khan</li>
+          <li>Qasim Taj</li>
+          <li>Qiswar Saeed Mirza</li>
+          <li>Qudsia Mumtaz</li>
+          <li>Qudsia Nadeem</li>
+          <li>Raees Fatima</li>
+          <li>Rafi Ul Zaman Zubairi</li>
+          <li>Rafi Ullah Mian</li>
+          <li>Rafiq Patel</li>
+          <li>Raheel Azhar</li>
+          <li>Rahimullah Yusufzai</li>
+          <li>Raja Anwar</li>
+          <li>Raja Muhammad Ali</li>
+          <li>Ramsha Aftab</li>
+          <li>Rana Hamza Hussain</li>
+          <li>Rana Mehboob Akhter</li>
+          <li>Rana Tanveer Hussain</li>
+          <li>Rao Khalid</li>
+          <li>Rao Manzar Hayat</li>
+          <li>Rao Saif U Zaman</li>
+          <li>Rao Shabir Bilo Khan</li>
+          <li>Raoof Tahir</li>
+          <li>Rasheed Udin</li>
+          <li>Rasul Bakhsh Rais</li>
+          <li>Rauf Klasra</li>
+          <li>Ray Riaz Hussain</li>
+          <li>Raza Ali Abdi</li>
+          <li>Reham Khan</li>
+          <li>Rehana Anwar Sidique</li>
+          <li>Rehmat Ali Razi</li>
+          <li>Riayatullah Farooqui</li>
+          <li>Riaz Ahmad</li>
+          <li>Riaz Ahmad Syed</li>
+          <li>Riaz Chaudhary</li>
+          <li>Rizwan Abdur Rehman Abdullah</li>
+          <li>Rizwan Asif</li>
+          <li>Rizwan Tahir Munir</li>
+          <li>Robert Fisk</li>
+          <li>Roha Salam</li>
+          <li>Rohail Baig</li>
+          <li>Rokhan Yousafzai</li>
+          <li>Romaisa Hussain</li>
+          <li>Rooba Arooj</li>
+          <li>Ruqaya Iqbal</li>
+          <li>S.M. Zafar</li>
+          <li>S.M.A. Kazmi</li>
+          <li>S.Nayyar</li>
+          <li>Saad Baig</li>
+          <li>Saad Rasool</li>
+          <li>Saad Ullah Jan Barq</li>
+          <li>Saad Ullah Shah</li>
+          <li>Sabiha Dastgir</li>
+          <li>Sabir Karbalai</li>
+          <li>Sabir Muhammad Hassani</li>
+          <li>Sabir Shakir</li>
+          <li>Sabookh Syed</li>
+          <li>Sabtain Haider</li>
+          <li>Sadia Qureshi</li>
+          <li>Saeed Khawar</li>
+          <li>Saeed Pervaz</li>
+          <li>Safdar Ali Haidri</li>
+          <li>Safdar Ali Khan</li>
+          <li>Safoora Khairi</li>
+          <li>Sagheer Ali Saddique</li>
+          <li>Sajid Ali Sajid</li>
+          <li>Sajid Shad</li>
+          <li>Sajjad Hussain Jaleb</li>
+          <li>Sajjad Jahania</li>
+          <li>Sajjad Mir</li>
+          <li>Saleem Safi</li>
+          <li>Saleem Saithi</li>
+          <li>Saleem Yazdani</li>
+          <li>Salma Awan</li>
+          <li>Salma Latif</li>
+          <li>Salman Abid</li>
+          <li>Salman Aslam</li>
+          <li>Salman Nisar Shiekh</li>
+          <li>Salman Rasool</li>
+          <li>Sami Ullah</li>
+          <li>Sami Ullah Malik</li>
+          <li>Samiha Raheel Qazi</li>
+          <li>Samson Simon Sharaf</li>
+          <li>Sana Ghouri</li>
+          <li>Sana Hashmi</li>
+          <li>Saqlain Shoukat</li>
+          <li>Sara Liaqat</li>
+          <li>Sardar Attique Ahmed Khan</li>
+          <li>Sardar Bahadur Ahmad Khan</li>
+          <li>Sardar Shokuat Iqbal</li>
+          <li>Sarfraz Hussain</li>
+          <li>Sarfraz Muhammad Saddique</li>
+          <li>Sarmad Ayub</li>
+          <li>Sarwar Munir Rao</li>
+          <li>Sarwat Jamal Asmai</li>
+          <li>Sarwat Valim</li>
+          <li>Saud Usmani</li>
+          <li>Saulat Raza</li>
+          <li>Sayeeda Warsi</li>
+          <li>Schehryar Ahmed</li>
+          <li>Seema Mustafa</li>
+          <li>Seema Siraj</li>
+          <li>Shabana Yousaf</li>
+          <li>Shabbir Ali Babar</li>
+          <li>Shabbir Arman</li>
+          <li>Shabbir Ghauri</li>
+          <li>Shabnam Gull</li>
+          <li>Shaeran Rufus</li>
+          <li>Shafiq Khokhar</li>
+          <li>Shafqat Mehmood</li>
+          <li>Shagufta Farhat</li>
+          <li>Shaheen Rehman</li>
+          <li>Shaheen Sehbai</li>
+          <li>Shahid Hameed</li>
+          <li>Shahid Hassan</li>
+          <li>Shahid Jatoi</li>
+          <li>Shahid Khaqan Abbasi</li>
+          <li>Shahid Siddiqui</li>
+          <li>Shahida Butt</li>
+          <li>Shahzaib Nawaz</li>
+          <li>Shaikh Jaber</li>
+          <li>Shakeel Farooqi</li>
+          <li>Shakeel Siddiqui</li>
+          <li>Shakeel Waheed Ullah Khan</li>
+          <li>Shakeela Fatima</li>
+          <li>Shakil Ahmad Turrabi</li>
+          <li>Shakir Hussain Shakir</li>
+          <li>Shamim Tariq</li>
+          <li>Shamshad Ahmad</li>
+          <li>Shamshad Ali Khan</li>
+          <li>Shan Khan</li>
+          <li>Shanza Sharafat</li>
+          <li>Shaoor Hussain</li>
+          <li>Shareef Ul Syeed Ali</li>
+          <li>Sharrar Gee</li>
+          <li>Shayan Tamseel</li>
+          <li>Shazia Chheena</li>
+          <li>Shazia Zeeshan</li>
+          <li>Shehbaz Anwar Khan</li>
+          <li>Shehla Hassan</li>
+          <li>Shehla Ijaz</li>
+          <li>Shehriyar Khan</li>
+          <li>Shehryar Afridi</li>
+          <li>Sher Muhammad Chishti</li>
+          <li>Shereen Haider</li>
+          <li>Shezi Toseef</li>
+          <li>Shoaib Wajid</li>
+          <li>Shokat Javed</li>
+          <li>Showkat Budnumbal Kashmiri</li>
+          <li>Shuja Nawaz</li>
+          <li>Shujaat Khan Ahamadani</li>
+          <li>Shujat Ali</li>
+          <li>Siddiq Al Farooq</li>
+          <li>Siddique Azhar</li>
+          <li>Sikandar Hameed Lodhi</li>
+          <li>Siraj Ul Haq</li>
+          <li>Sobia Imran</li>
+          <li>Sobia Khan Niazi</li>
+          <li>Sofia Baidar</li>
+          <li>Sofiya Naveed</li>
+          <li>Sohaib Marghub</li>
+          <li>Sohail Ahmad</li>
+          <li>Sohail Ahmad Azmi</li>
+          <li>Sohail Ahmed Qaisar</li>
+          <li>Sohail Butt</li>
+          <li>Sohail Danish</li>
+          <li>Sohail Iqbal Bhatti</li>
+          <li>Sohail Warraich</li>
+          <li>Sohrab Ali</li>
+          <li>Suhail Sangi</li>
+          <li>Sultan Imran</li>
+          <li>Sumaira Malik</li>
+          <li>Summan Tariq</li>
+          <li>Syed Absar Bukhari</li>
+          <li>Syed Afaq Bukhari</li>
+          <li>Syed Ahtesham Zamir</li>
+          <li>Syed Akhtar Hussain Naqvi</li>
+          <li>Syed Alamdar Haider</li>
+          <li>Syed Ali Haroon</li>
+          <li>Syed Ali Zamin Naqvi</li>
+          <li>Syed Anwar Qudwai</li>
+          <li>Syed Arif Nonari</li>
+          <li>Syed Asadullah</li>
+          <li>Syed Azhar Hussnain Abdi</li>
+          <li>Syed Babar Ali</li>
+          <li>Syed Haris Kazmi</li>
+          <li>Syed Hasam Ahmad</li>
+          <li>Syed Hasnain Rizvi</li>
+          <li>Syed Jawad Hussain Rizvi</li>
+          <li>Syed Kaswar Gardezi</li>
+          <li>Syed Khyber Ali</li>
+          <li>Syed Mehmood Shah Sherazi</li>
+          <li>Syed Mohsin Kazmi</li>
+          <li>Syed Muazam Hai</li>
+          <li>Syed Muhammad Habib Irfani</li>
+          <li>Syed Munawar Hassan</li>
+          <li>Syed Musharraf Shah</li>
+          <li>Syed Nauman</li>
+          <li>Syed Noor Azhar Jaffri</li>
+          <li>Syed Qamber Ali Rizvi</li>
+          <li>Syed Qasim Ali Shah</li>
+          <li>Syed Shah Muhammad Hamza</li>
+          <li>Syed Shariq Waqar</li>
+          <li>Syed Shehanshah Hussain Naqvi</li>
+          <li>Syed Shuja Haider</li>
+          <li>Syed Tanzeel Ashfaq</li>
+          <li>Syed Wali Shah Afridi</li>
+          <li>Syed Waqas Anjum Jaffery</li>
+          <li>Syed Yusaf Raza Gilani</li>
+          <li>Syed Zeeshan Haider</li>
+          <li>Syeda Alisha</li>
+          <li>Syeda Maleeha Jalali</li>
+          <li>Syeda Muntaha Musharraf</li>
+          <li>Syeda Najam Zahra Rizvi</li>
+          <li>Tabinda Khan</li>
+          <li>Tahir Ahmed Farooqi</li>
+          <li>Tahir Mehmood Ashrafi</li>
+          <li>Tahir Najmi</li>
+          <li>Tahir Sarwar Mir</li>
+          <li>Taj Haider</li>
+          <li>Talat Hussain</li>
+          <li>Talat Masood</li>
+          <li>Talat Shabbir</li>
+          <li>Tania Habib</li>
+          <li>Tanveer Ahmed Chandio</li>
+          <li>Tanveer Qaisar Shahid</li>
+          <li>Tariq Butt</li>
+          <li>Tariq Habib</li>
+          <li>Tariq Ismail Sagar</li>
+          <li>Tariq Kamran</li>
+          <li>Tariq Khursheed Malik</li>
+          <li>Tariq Mateen</li>
+          <li>Tariq Mehmood Chaudhary</li>
+          <li>Tariq Mehmood Mian</li>
+          <li>Tasneem Peer Zada</li>
+          <li>Taufeeq Butt</li>
+          <li>Tausif Ahmad Khan</li>
+          <li>Tayeba Zia</li>
+          <li>Tehmina Mukhtar</li>
+          <li>Temoor Khan</li>
+          <li>Tishna Barelvi</li>
+          <li>Tuba Tariq</li>
+          <li>Umar Farooq</li>
+          <li>Umer Qazi</li>
+          <li>Unaiza Siddiqui</li>
+          <li>Usama Shabir</li>
+          <li>Usman Damohi</li>
+          <li>Usman Hassan Zai</li>
+          <li>Wajahat Ali Abbasi</li>
+          <li>Wajahat Masood</li>
+          <li>Wajahat Saeed Khan</li>
+          <li>Wajid Bhatti</li>
+          <li>Waleed Babar</li>
+          <li>Wania Shahid</li>
+          <li>Waqar Ahmad Khan</li>
+          <li>Waqar Khan</li>
+          <li>Waqeel Anjum</li>
+          <li>Waseem Ahmed Khan</li>
+          <li>Waseh Jalil</li>
+          <li>Wasi Shah</li>
+          <li>Wasif Nagi</li>
+          <li>Wisal Ahmad</li>
+          <li>Wusat Ullah Khan</li>
+          <li>Yasir Pirzada</li>
+          <li>Yasmin Rashid</li>
+          <li>Younus Hamdam</li>
+          <li>Yousaf Abbasi</li>
+          <li>Yousaf Hussain Sherazi</li>
+          <li>Yousuf Siraj</li>
+          <li>Zaara Mazhar</li>
+          <li>Zafar Agha</li>
+          <li>Zafar Hassan</li>
+          <li>Zafar Hilaly</li>
+          <li>Zafar Iqbal</li>
+          <li>Zafar Mahmood</li>
+          <li>Zafar Muhayyudin</li>
+          <li>Zafar Rame</li>
+          <li>Zafar Ul Haq Meman</li>
+          <li>Zahid Ali Khan</li>
+          <li>Zahid Awan</li>
+          <li>Zahid Mubashir</li>
+          <li>Zahida Hina</li>
+          <li>Zahida Javed</li>
+          <li>Zahir Akhter Bedi</li>
+          <li>Zahoor Dhareja</li>
+          <li>Zaiba Naureen</li>
+          <li>Zaid Malik</li>
+          <li>Zain Ulabidin</li>
+          <li>Zalme Khalil Zad</li>
+          <li>Zameer Balouch</li>
+          <li>Zamurd Naqvi</li>
+          <li>Zeeshan Hashim</li>
+          <li>Zeeshan Noor Khilji</li>
+          <li>Zeeshan Shah</li>
+          <li>Zia Shahid</li>
+          <li>Zohaib Hassan</li>
+          <li>Zoya Qadri</li>
+          <li>Zubair Rehman</li>
+          <li>Zulfiqar Ahmed Cheema</li>
+          <li>Zulfiqar Chaudhry</li>
+          <li>Zulkarneen Zaidi</li>
+        </ul>
+      </div>
+    </div>
+    <div class="screen" id="saved">
+      <div id="lottie-empty"></div>
     </div>
     <div class="bottom-menu" id="bottom-bar-main">
       <div class="bottom-item-main" data-screen="articles">
@@ -113,6 +1098,6 @@
       </div>
     </div>
     <script src="script.js"></script>
-	 <script src="date-picker.js"></script>
-  </body>
+    <script src="date-picker.js"></script>
+</body>
 </html>
