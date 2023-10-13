@@ -176,7 +176,7 @@ function clearScrapedData() {
 function handleArticleClick(selectedItem) {
     displayArticleText(selectedItem.url);
     const listItem = document.querySelector(`[data-url="${selectedItem.url}"]`);
-    
+
     if (listItem) {
         const titleElement = listItem.querySelector('.list-item-right p strong');
         if (titleElement) {
@@ -214,7 +214,7 @@ async function displayArticleText(url) {
             articleText.appendChild(articleTextElement);
             articleText.classList.add('active');
             // Set the max-height of .article-text.active to the contentHeight
-            document.querySelector('.article-text.active').style.maxHeight = (document.querySelector('.content').offsetHeight - 52)  + 'px';
+            document.querySelector('.article-text.active').style.maxHeight = (document.querySelector('.content').offsetHeight - 52) + 'px';
             document.querySelector('.scroll-indicator').style.display = 'block';
             articleList.classList.add('hidden');
             topBarMain.style.top = `-${topBarMain.offsetHeight}px`;
@@ -236,7 +236,7 @@ document.querySelector('i.fas.fa-arrow-left').closest('.top-left').addEventListe
 });
 
 function backButton() {
-    document.querySelector('.article-text.active').style.maxHeight = 0  + 'px';
+    document.querySelector('.article-text.active').style.maxHeight = 0 + 'px';
     articleText.innerHTML = '';
     showBars();
     articleText.classList.remove('active');
@@ -358,44 +358,68 @@ const alignmentButtons = document.querySelectorAll('.text-icon-button');
 // Load saved settings when the page loads
 window.addEventListener('load', () => {
     // Load and apply the saved settings, or use default values if not saved
-    const savedTextSize = localStorage.getItem('textSize') || '20';
-    const savedLineHeight = localStorage.getItem('lineHeight') || '2';
-    const savedAlignment = localStorage.getItem('alignment') || 'justify';
+    let savedTextSize;
+    let savedLineHeight;
+    let savedAlignment;
+    
+    if (window.AppInventor && window.AppInventor.setWebViewString) {
+        const values = window.AppInventor.getWebViewString().split(',');
+        // Load and apply the saved settings, or use default values if not saved
+        savedTextSize = values[0] || localStorage.getItem('textSize') || '20';
+        savedLineHeight = values[1] || localStorage.getItem('lineHeight') || '2';
+        savedAlignment = values[2] || localStorage.getItem('alignment') || 'justify';
+    } else {
+        // If AppInventor functions are not available, use local storage or default values
+        savedTextSize = localStorage.getItem('textSize') || '20';
+        savedLineHeight = localStorage.getItem('lineHeight') || '2';
+        savedAlignment = localStorage.getItem('alignment') || 'justify';
+    }
+    
+    // Now you can use savedTextSize, savedLineHeight, and savedAlignment here.
+    
     // Apply the loaded settings
     textSizeSlider.value = savedTextSize;
-    document.querySelector('.article-text').style.fontSize = `${savedTextSize}px`;
-
+    articleText.style.fontSize = `${savedTextSize}px`;
     lineHeightSlider.value = savedLineHeight;
-    document.querySelector('.article-text').style.lineHeight = savedLineHeight;
+    articleText.style.lineHeight = savedLineHeight;
 
     alignmentButtons.forEach(button => {
         button.classList.remove('text-icon-button-active');
         if (button.id === savedAlignment) {
             button.classList.add('text-icon-button-active');
-            document.querySelector('.article-text').style.textAlign = savedAlignment;
+            articleText.style.textAlign = savedAlignment;
         }
     });
 });
 
 textSizeSlider.addEventListener('input', () => {
     const textSize = `${textSizeSlider.value}px`;
-    document.querySelector('.article-text').style.fontSize = textSize;
+    articleText.style.fontSize = textSize;
+    if (window.AppInventor && window.AppInventor.setWebViewString) {
+        window.AppInventor.setWebViewString('textSize: ' + textSizeSlider.value);
+    }
     localStorage.setItem('textSize', textSizeSlider.value);
 });
 
 lineHeightSlider.addEventListener('input', () => {
     const lineHeight = lineHeightSlider.value;
-    document.querySelector('.article-text').style.lineHeight = lineHeight;
+    articleText.style.lineHeight = lineHeight;
+    if (window.AppInventor && window.AppInventor.setWebViewString) {
+        window.AppInventor.setWebViewString('lineHeight: ' + lineHeight);
+    }
     localStorage.setItem('lineHeight', lineHeight);
 });
 
 alignmentButtons.forEach(button => {
     button.addEventListener('click', () => {
         const alignment = button.id;
-        document.querySelector('.article-text').style.textAlign = alignment;
-        localStorage.setItem('alignment', alignment);
+        articleText.style.textAlign = alignment;
         alignmentButtons.forEach(btn => btn.classList.remove('text-icon-button-active'));
         button.classList.add('text-icon-button-active');
+        if (window.AppInventor && window.AppInventor.setWebViewString) {
+            window.AppInventor.setWebViewString('alignment: ' + alignment);
+        }
+        localStorage.setItem('alignment', alignment);
     });
 });
 
@@ -423,7 +447,7 @@ function startScroll(speed) {
                 alert('Keep Scree On Not Supported');
             });
         }
-        
+
         stopScroll(); // Stop any ongoing scroll
         // Adjust the scrollStep value to change the scrolling speed
         const scrollStep = speed;
@@ -453,17 +477,18 @@ function stopScroll() {
 // Share Feature __________________________________________________________________________________________________________________________
 document.querySelector('i.fas.fa-share-alt').closest('.bottom-item-article').addEventListener('click', () => {
     const articleTitle = document.getElementById('articleTitle');
+    const sharedText = 'Try Qaalim' + '\n\n' + `${articleTitle.textContent}\n\n${articleText.textContent}`
     if (articleTitle && articleText && window.AppInventor && window.AppInventor.setWebViewString) {
         // Use window.AppInventor.setWebViewString if available
-        window.AppInventor.setWebViewString(`${articleTitle.textContent}\n\n${articleText.textContent}`);
+        window.AppInventor.setWebViewString(sharedText);
     } else if (navigator.share) {
         // Use Web Share API as a fallback
         navigator.share({
             title: 'Share Article',
-            text: `${articleTitle.textContent}\n\n${articleText.textContent}`,
+            text: sharedText,
         })
-        .then(() => console.log('Shared successfully'))
-        .catch(error => console.error('Share error:', error));
+            .then(() => console.log('Shared successfully'))
+            .catch(error => console.error('Share error:', error));
     } else {
         alert('Please Use Any Latest Browser');
     }
@@ -478,24 +503,24 @@ document.querySelector('i.fas.fa-compress').closest('.minimize-button').addEvent
 });
 
 function hideBars() {
-        topBarArticle.style.display = 'none';
-        bottomBarArticle.style.display = 'none';
-        document.querySelector('.content').style.position = 'initial'
-        document.querySelector('.article-text.active').style.maxHeight = (window.innerHeight - 42)  + 'px';
-        document.querySelector('.minimize-button').style.display = 'flex';
-        if (window.AppInventor && window.AppInventor.setWebViewString) {
-            window.AppInventor.setWebViewString(`Full Screen`);
-        }
+    topBarArticle.style.display = 'none';
+    bottomBarArticle.style.display = 'none';
+    document.querySelector('.content').style.position = 'initial'
+    document.querySelector('.article-text.active').style.maxHeight = (window.innerHeight - 42) + 'px';
+    document.querySelector('.minimize-button').style.display = 'flex';
+    if (window.AppInventor && window.AppInventor.setWebViewString) {
+        window.AppInventor.setWebViewString(`Full Screen`);
+    }
 }
 function showBars() {
-        topBarArticle.style.display = 'flex';
-        bottomBarArticle.style.display = 'flex';
-        document.querySelector('.content').style.position = 'fixed'
-        document.querySelector('.article-text.active').style.maxHeight = (document.querySelector('.content').offsetHeight - 52)  + 'px';
-        document.querySelector('.minimize-button').style.display = 'none';
-        if (window.AppInventor && window.AppInventor.setWebViewString) {
-            window.AppInventor.setWebViewString(`Exit Screen`);
-        }
+    topBarArticle.style.display = 'flex';
+    bottomBarArticle.style.display = 'flex';
+    document.querySelector('.content').style.position = 'fixed'
+    document.querySelector('.article-text.active').style.maxHeight = (document.querySelector('.content').offsetHeight - 52) + 'px';
+    document.querySelector('.minimize-button').style.display = 'none';
+    if (window.AppInventor && window.AppInventor.setWebViewString) {
+        window.AppInventor.setWebViewString(`Exit Screen`);
+    }
 }
 
 // Progress Bar Feature __________________________________________________________________________________________________________________________
@@ -506,12 +531,12 @@ articleText.addEventListener('scroll', () => {
 
 // Lottie Animation
 const animation = lottie.loadAnimation({
-    container: document.getElementById('lottie-empty'), 
+    container: document.getElementById('lottie-empty'),
     renderer: 'svg',
     loop: true,
     autoplay: true,
     path: 'empty.json'
-  });
+});
 
 
 // Call the scrapeData function when the page loads
