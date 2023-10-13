@@ -170,7 +170,7 @@ p {
   width: -webkit-fill-available;
   align-content: center;
   justify-content: space-between;
-  align-items: center;
+  align-items: stretch;
   justify-items: stretch;
 }
 
