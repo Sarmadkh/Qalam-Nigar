@@ -386,3 +386,7 @@ input[type="range"]::-webkit-slider-thumb:after {
   background-color: #007acc;
   transition: width 0.3s;
 }
+
+#lottie-sync, #lottie-empty {
+  height: 50vh;
+}
