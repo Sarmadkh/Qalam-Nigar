@@ -12,6 +12,7 @@ const bottomBarMain = document.getElementById('bottom-bar-main');
 const topBarArticle = document.getElementById('top-bar-article');
 const bottomBarArticle = document.getElementById('bottom-bar-article');
 const settingsBox = document.querySelector('.text-options-box');
+const appInventor = window.AppInventor && window.AppInventor.setWebViewString;
 let page = 1;
 let selectedAuthor = "";
 
@@ -163,11 +164,13 @@ function displayData() {
                     </div>
                 `;
         articleList.appendChild(listItem);
+        document.getElementById('lottie-sync').style.display = 'none';
     });
 }
 
 // Function to clear the scraped data ____________________________________________________________________________
 function clearScrapedData() {
+    document.getElementById('lottie-sync').style.display = 'block';
     scrapedData.length = 0;
     articleList.innerHTML = '';
 }
@@ -351,7 +354,8 @@ function hideSettingsBox() {
     settingsBox.style.bottom = '-275px';
     isSettingsBoxVisible = false;
 }
-// Changing article text based on selected option
+
+// Saving and Loading the Text Options _____________________________________________________________________________________________
 const textSizeSlider = document.getElementById('textSize');
 const lineHeightSlider = document.getElementById('lineHeight');
 const alignmentButtons = document.querySelectorAll('.text-icon-button');
@@ -362,20 +366,18 @@ window.addEventListener('load', () => {
     let savedLineHeight;
     let savedAlignment;
     
-    if (window.AppInventor && window.AppInventor.setWebViewString) {
+    if (appInventor) {
         const values = window.AppInventor.getWebViewString().split(',');
         // Load and apply the saved settings, or use default values if not saved
-        savedTextSize = values[0] || localStorage.getItem('textSize') || '20';
-        savedLineHeight = values[1] || localStorage.getItem('lineHeight') || '2';
-        savedAlignment = values[2] || localStorage.getItem('alignment') || 'justify';
+        savedTextSize = values[0] || '20';
+        savedLineHeight = values[1] || '2';
+        savedAlignment = values[2] || 'justify';
     } else {
         // If AppInventor functions are not available, use local storage or default values
         savedTextSize = localStorage.getItem('textSize') || '20';
         savedLineHeight = localStorage.getItem('lineHeight') || '2';
         savedAlignment = localStorage.getItem('alignment') || 'justify';
     }
-    
-    // Now you can use savedTextSize, savedLineHeight, and savedAlignment here.
     
     // Apply the loaded settings
     textSizeSlider.value = savedTextSize;
@@ -395,18 +397,14 @@ window.addEventListener('load', () => {
 textSizeSlider.addEventListener('input', () => {
     const textSize = `${textSizeSlider.value}px`;
     articleText.style.fontSize = textSize;
-    if (window.AppInventor && window.AppInventor.setWebViewString) {
-        window.AppInventor.setWebViewString('textSize: ' + textSizeSlider.value);
-    }
+    if (appInventor) { window.AppInventor.setWebViewString('textSize: ' + textSizeSlider.value); }
     localStorage.setItem('textSize', textSizeSlider.value);
 });
 
 lineHeightSlider.addEventListener('input', () => {
     const lineHeight = lineHeightSlider.value;
     articleText.style.lineHeight = lineHeight;
-    if (window.AppInventor && window.AppInventor.setWebViewString) {
-        window.AppInventor.setWebViewString('lineHeight: ' + lineHeight);
-    }
+    if (appInventor) { window.AppInventor.setWebViewString('lineHeight: ' + lineHeight); }
     localStorage.setItem('lineHeight', lineHeight);
 });
 
@@ -416,9 +414,7 @@ alignmentButtons.forEach(button => {
         articleText.style.textAlign = alignment;
         alignmentButtons.forEach(btn => btn.classList.remove('text-icon-button-active'));
         button.classList.add('text-icon-button-active');
-        if (window.AppInventor && window.AppInventor.setWebViewString) {
-            window.AppInventor.setWebViewString('alignment: ' + alignment);
-        }
+        if (appInventor) { window.AppInventor.setWebViewString('alignment: ' + alignment); }
         localStorage.setItem('alignment', alignment);
     });
 });
@@ -426,7 +422,6 @@ alignmentButtons.forEach(button => {
 // Auto Scroll Feature __________________________________________________________________________________________________________________________
 const scrollSpeed = document.getElementById('scrollSpeed');
 let scrollInterval = null;
-let wakeLock = null; // Initialize wake lock variable
 
 scrollSpeed.addEventListener('input', () => {
     const speed = parseInt(scrollSpeed.value, 10);
@@ -439,24 +434,16 @@ scrollSpeed.addEventListener('input', () => {
 
 function startScroll(speed) {
     if (speed > 0) {
-        // Request a wake lock to keep the screen on
-        if ('wakeLock' in navigator) {
-            navigator.wakeLock.request('screen').then((lock) => {
-                wakeLock = lock;
-            }).catch((error) => {
-                alert('Keep Scree On Not Supported');
-            });
-        }
-
         stopScroll(); // Stop any ongoing scroll
         // Adjust the scrollStep value to change the scrolling speed
+        if (appInventor) { window.AppInventor.setWebViewString(`Full Screen`); }
         const scrollStep = speed;
         const intervalDelay = 50; // Increase this value for slower scrolling
         scrollInterval = setInterval(() => {
             articleText.scrollTop += scrollStep;
+            // Set the slider back to 0 when scrolling reaches the end
             if (articleText.scrollTop >= articleText.scrollHeight - articleText.clientHeight) {
                 stopScroll();
-                // Set the slider back to 0 when scrolling reaches the end
                 scrollSpeed.value = 0;
             }
         }, intervalDelay);
@@ -467,11 +454,7 @@ function startScroll(speed) {
 
 function stopScroll() {
     clearInterval(scrollInterval);
-    // Release the wake lock when scrolling stops
-    if (wakeLock) {
-        wakeLock.release();
-        wakeLock = null;
-    }
+    if (appInventor) { window.AppInventor.setWebViewString(`Exit Screen`); }
 }
 
 // Share Feature __________________________________________________________________________________________________________________________
@@ -508,9 +491,7 @@ function hideBars() {
     document.querySelector('.content').style.position = 'initial'
     document.querySelector('.article-text.active').style.maxHeight = (window.innerHeight - 42) + 'px';
     document.querySelector('.minimize-button').style.display = 'flex';
-    if (window.AppInventor && window.AppInventor.setWebViewString) {
-        window.AppInventor.setWebViewString(`Full Screen`);
-    }
+    if (appInventor) { window.AppInventor.setWebViewString(`Full Screen`); }
 }
 function showBars() {
     topBarArticle.style.display = 'flex';
@@ -518,9 +499,7 @@ function showBars() {
     document.querySelector('.content').style.position = 'fixed'
     document.querySelector('.article-text.active').style.maxHeight = (document.querySelector('.content').offsetHeight - 52) + 'px';
     document.querySelector('.minimize-button').style.display = 'none';
-    if (window.AppInventor && window.AppInventor.setWebViewString) {
-        window.AppInventor.setWebViewString(`Exit Screen`);
-    }
+    if (appInventor) { window.AppInventor.setWebViewString(`Exit Screen`); }
 }
 
 // Progress Bar Feature __________________________________________________________________________________________________________________________
@@ -530,12 +509,20 @@ articleText.addEventListener('scroll', () => {
 
 
 // Lottie Animation
-const animation = lottie.loadAnimation({
+lottie.loadAnimation({
     container: document.getElementById('lottie-empty'),
     renderer: 'svg',
     loop: true,
     autoplay: true,
     path: 'empty.json'
+});
+
+lottie.loadAnimation({
+    container: document.getElementById('lottie-sync'),
+    renderer: 'svg',
+    loop: true,
+    autoplay: true,
+    path: 'sync.json'
 });
 
 
