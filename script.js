@@ -508,7 +508,19 @@ articleText.addEventListener('scroll', () => {
 });
 
 
-// Lottie Animation
+// Lottie Animation __________________________________________________________________________________________________________________________
+function offlineMode() {
+    document.getElementById('lottie-offline').style.display = 'block';
+    clearScrapedData();
+    document.getElementById('lottie-sync').style.display = 'none';
+}
+
+function onlineMode() {
+    document.getElementById('lottie-offline').style.display = 'none';
+    clearScrapedData();
+    scrapeData();
+}
+
 lottie.loadAnimation({
     container: document.getElementById('lottie-empty'),
     renderer: 'svg',
@@ -523,6 +535,14 @@ lottie.loadAnimation({
     loop: true,
     autoplay: true,
     path: 'sync.json'
+});
+
+lottie.loadAnimation({
+    container: document.getElementById('lottie-offline'),
+    renderer: 'svg',
+    loop: true,
+    autoplay: true,
+    path: 'offline.json'
 });
 
 
