@@ -387,6 +387,6 @@ input[type="range"]::-webkit-slider-thumb:after {
   transition: width 0.3s;
 }
 
-#lottie-sync, #lottie-empty {
+#lottie-sync, #lottie-empty, #lottie-offline {
   height: 50vh;
 }
