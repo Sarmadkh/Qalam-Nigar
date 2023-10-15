@@ -12,13 +12,18 @@ const bottomBarMain = document.getElementById('bottom-bar-main');
 const topBarArticle = document.getElementById('top-bar-article');
 const bottomBarArticle = document.getElementById('bottom-bar-article');
 const settingsBox = document.querySelector('.text-options-box');
-const appInventor = window.AppInventor && window.AppInventor.setWebViewString;
 let page = 1;
 let selectedAuthor = "";
 
+//Function to Send Message to App Inventor _____________________________________________________________
+function appInventorMessage(message) {
+    if (window.AppInventor && window.AppInventor.setWebViewString) {
+      window.AppInventor.setWebViewString(message);
+    }
+}
+
 //Chnage styling for Bottom Menu on click _____________________________________________________________
 document.addEventListener('DOMContentLoaded', function () {
-
     bottomItems[0].classList.add('active');
     bottomItems.forEach(item => {
         item.addEventListener('click', () => {
@@ -51,7 +56,6 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById(screenId).style.display = 'block';
             // Update the top menu text based on the active screen
             document.querySelector('.top-middle').textContent = screenTextMap[screenId] || "Articles";
-            // Check if the "Author" screen is clicked and run the backButton function
         });
     });
 });
@@ -85,13 +89,11 @@ async function scrapeData(url = proxy + website + 'LstColumns.aspx') {
 }
 
 // Selecting the Author ___________________________________________________________________________________________
-function handleAuthorSelection(event) {
-    event.preventDefault();
-    selectedAuthor = event.target.textContent;
-    clearScrapedData();
-    if (selectedAuthor) {
+function handleAuthorSelection(authorName) {
+    if (authorName) {
+        clearScrapedData();
         page = 1;
-        getNewData(selectedAuthor, page);
+        getNewData(authorName, page);
     } else {
         console.error("Selected author is undefined.");
     }
@@ -99,7 +101,11 @@ function handleAuthorSelection(event) {
 
 // Attaching Click with Author List
 authorListItems.forEach(authorListItem => {
-    authorListItem.addEventListener('click', handleAuthorSelection);
+    authorListItem.addEventListener('click', function(event) {
+        event.preventDefault();
+        const authorName = event.target.textContent;
+        handleAuthorSelection(authorName);
+    });
 });
 
 function getNewData(authorName, page) {
@@ -128,6 +134,42 @@ content.addEventListener('scroll', function () {
         getNewData(selectedAuthor, page);
 
     }
+});
+
+// Favorite Author Feature __________________________________________________________________________________________________________________________
+document.addEventListener('DOMContentLoaded', function () {
+    // Sample data of favorite authors separated by commas
+    const favoriteAuthorsData = "Javed Chaudhry, Orya Maqbool Jan, Zahida Hina, Wusat Ullah Khan";
+    const favoriteAuthorsContainer = document.querySelector('.favorite-author-list ul');
+    if (favoriteAuthorsContainer) {
+        const favoriteAuthors = favoriteAuthorsData.split(', ');
+        favoriteAuthors.forEach(authorName => {
+            const listItem = document.createElement('li');
+            listItem.className = 'author-item';
+            const authorBox = document.createElement('div');
+            authorBox.className = 'author-box';
+            const icon = document.createElement('span');
+            icon.className = 'author-icon';
+            icon.innerHTML = '<i class="fas fa-user"></i>';
+            const name = document.createElement('span');
+            name.className = 'author-name';
+            name.textContent = authorName;
+            authorBox.appendChild(icon);
+            authorBox.appendChild(name);
+            listItem.appendChild(authorBox);
+            favoriteAuthorsContainer.appendChild(listItem);
+        });
+    }
+});
+// Selecting Favorite Author
+document.addEventListener("DOMContentLoaded", function() {
+    var authorItems = document.querySelectorAll('.favorite-author-list .author-item');  
+    authorItems.forEach(function(item) {
+        item.addEventListener('click', function() {
+            var authorName = item.querySelector('.author-name').textContent;
+            handleAuthorSelection(authorName);
+        });
+    });
 });
 
 // Function to format the date as three lines ____________________________________________________________________________
@@ -242,6 +284,7 @@ function backButton() {
     document.querySelector('.article-text.active').style.maxHeight = 0 + 'px';
     articleText.innerHTML = '';
     showBars();
+    hideSettingsBox();
     articleText.classList.remove('active');
     articleList.classList.remove('hidden');
     document.querySelector('.scroll-indicator').style.display = 'none';
@@ -256,19 +299,13 @@ function backButton() {
 // Search Functionality for Author List
 document.addEventListener('DOMContentLoaded', function () {
     const authorList = document.querySelector('.author-list ul.author-grid');
-    const authors = authorList.getElementsByTagName('li');
-
+    const authors = Array.from(authorList.getElementsByTagName('li'));
     authorSearch.addEventListener('input', function () {
         const searchTerm = authorSearch.value.toLowerCase();
-
-        for (let i = 0; i < authors.length; i++) {
-            const authorName = authors[i].textContent.toLowerCase();
-            if (authorName.includes(searchTerm)) {
-                authors[i].style.display = 'block';
-            } else {
-                authors[i].style.display = 'none';
-            }
-        }
+        authors.forEach(author => {
+            const authorName = author.textContent.toLowerCase();
+            author.style.display = authorName.includes(searchTerm) ? 'block' : 'none';
+        });
     });
 });
 
@@ -283,12 +320,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (titleElement) {
                     const title = titleElement.textContent.toLowerCase();
                     const isMatch = title.includes(searchTerm);
-                    // Show or hide the article based on the search result
-                    if (isMatch) {
-                        article.style.display = 'flex';
-                    } else {
-                        article.style.display = 'none';
-                    }
+                    article.style.display = isMatch ? 'flex' : 'none';
                 }
             });
         });
@@ -366,7 +398,7 @@ window.addEventListener('load', () => {
     let savedLineHeight;
     let savedAlignment;
     
-    if (appInventor) {
+    if (window.AppInventor && window.AppInventor.setWebViewString) {
         const values = window.AppInventor.getWebViewString().split(',');
         // Load and apply the saved settings, or use default values if not saved
         savedTextSize = values[0] || '20';
@@ -397,14 +429,14 @@ window.addEventListener('load', () => {
 textSizeSlider.addEventListener('input', () => {
     const textSize = `${textSizeSlider.value}px`;
     articleText.style.fontSize = textSize;
-    if (appInventor) { window.AppInventor.setWebViewString('textSize: ' + textSizeSlider.value); }
+    appInventorMessage('textSize: ' + textSizeSlider.value);
     localStorage.setItem('textSize', textSizeSlider.value);
 });
 
 lineHeightSlider.addEventListener('input', () => {
     const lineHeight = lineHeightSlider.value;
     articleText.style.lineHeight = lineHeight;
-    if (appInventor) { window.AppInventor.setWebViewString('lineHeight: ' + lineHeight); }
+    appInventorMessage('lineHeight: ' + lineHeight);
     localStorage.setItem('lineHeight', lineHeight);
 });
 
@@ -414,7 +446,7 @@ alignmentButtons.forEach(button => {
         articleText.style.textAlign = alignment;
         alignmentButtons.forEach(btn => btn.classList.remove('text-icon-button-active'));
         button.classList.add('text-icon-button-active');
-        if (appInventor) { window.AppInventor.setWebViewString('alignment: ' + alignment); }
+        appInventorMessage('alignment: ' + alignment);
         localStorage.setItem('alignment', alignment);
     });
 });
@@ -436,7 +468,7 @@ function startScroll(speed) {
     if (speed > 0) {
         stopScroll(); // Stop any ongoing scroll
         // Adjust the scrollStep value to change the scrolling speed
-        if (appInventor) { window.AppInventor.setWebViewString(`Full Screen`); }
+        appInventorMessage(`Full Screen`);
         const scrollStep = speed;
         const intervalDelay = 50; // Increase this value for slower scrolling
         scrollInterval = setInterval(() => {
@@ -454,7 +486,7 @@ function startScroll(speed) {
 
 function stopScroll() {
     clearInterval(scrollInterval);
-    if (appInventor) { window.AppInventor.setWebViewString(`Exit Screen`); }
+    appInventorMessage(`Exit Screen`);
 }
 
 // Share Feature __________________________________________________________________________________________________________________________
@@ -470,8 +502,6 @@ document.querySelector('i.fas.fa-share-alt').closest('.bottom-item-article').add
             title: 'Share Article',
             text: sharedText,
         })
-            .then(() => console.log('Shared successfully'))
-            .catch(error => console.error('Share error:', error));
     } else {
         alert('Please Use Any Latest Browser');
     }
@@ -489,9 +519,9 @@ function hideBars() {
     topBarArticle.style.display = 'none';
     bottomBarArticle.style.display = 'none';
     document.querySelector('.content').style.position = 'initial'
-    document.querySelector('.article-text.active').style.maxHeight = (window.innerHeight - 42) + 'px';
+    document.querySelector('.article-text.active').style.maxHeight = (window.innerHeight - 49) + 'px';
     document.querySelector('.minimize-button').style.display = 'flex';
-    if (appInventor) { window.AppInventor.setWebViewString(`Full Screen`); }
+    appInventorMessage(`Full Screen`);
 }
 function showBars() {
     topBarArticle.style.display = 'flex';
@@ -499,7 +529,7 @@ function showBars() {
     document.querySelector('.content').style.position = 'fixed'
     document.querySelector('.article-text.active').style.maxHeight = (document.querySelector('.content').offsetHeight - 52) + 'px';
     document.querySelector('.minimize-button').style.display = 'none';
-    if (appInventor) { window.AppInventor.setWebViewString(`Exit Screen`); }
+    appInventorMessage(`Exit Screen`);
 }
 
 // Progress Bar Feature __________________________________________________________________________________________________________________________
@@ -521,30 +551,19 @@ function onlineMode() {
     scrapeData();
 }
 
-lottie.loadAnimation({
-    container: document.getElementById('lottie-empty'),
+function loadLottieAnimation(containerId, animationPath) {
+  lottie.loadAnimation({
+    container: document.getElementById(containerId),
     renderer: 'svg',
     loop: true,
     autoplay: true,
-    path: 'empty.json'
-});
+    path: animationPath,
+  });
+}
 
-lottie.loadAnimation({
-    container: document.getElementById('lottie-sync'),
-    renderer: 'svg',
-    loop: true,
-    autoplay: true,
-    path: 'sync.json'
-});
-
-lottie.loadAnimation({
-    container: document.getElementById('lottie-offline'),
-    renderer: 'svg',
-    loop: true,
-    autoplay: true,
-    path: 'offline.json'
-});
-
+loadLottieAnimation('lottie-empty', 'empty.json');
+loadLottieAnimation('lottie-sync', 'sync.json');
+loadLottieAnimation('lottie-offline', 'offline.json');
 
 // Call the scrapeData function when the page loads
 window.addEventListener('load', scrapeData());
