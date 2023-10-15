@@ -5,9 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.8/lottie.min.js"></script>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="date-picker.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.8/lottie.min.js"></script>
 
   <title>Qaalim</title>
   <link rel="icon" href="icon.png" type="image/png">
@@ -16,7 +16,6 @@
 <body>
   <div class="top-bar" id="top-bar-main" style="display: flex;">
     <div class="top-left">
-
       <i class="far fa-calendar-alt" class="date-picker"></i>
     </div>
     <div class="top-middle">Articles</div>
@@ -80,6 +79,11 @@
     <div class="screen" id="authors">
       <div class="search-box" style="display: none;">
         <input type="text" placeholder="Search Authors" id="authorSearch">
+      </div>
+      <div class="favorite-author">
+        <div class="favorite-author-list">
+          <ul></ul>
+        </div>
       </div>
       <div class="author-list">
         <ul class="author-grid"> 
